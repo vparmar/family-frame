@@ -683,13 +683,6 @@ const PHOTOS = [
   'https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1600&q=80', // Green valley
 ];
 
-// ── STATE ────────────────────────────────────────────────────
-let cfg = loadCfg();
-let currentIdx = 0;
-let slideInterval;
-let slides = [];
-let wakelock = null;
-
 // ── DEFAULT TICKER MESSAGES ───────────────────────────────────
 const DEFAULT_MSGS = [
   "📚 Homework before screens",
@@ -703,6 +696,13 @@ const DEFAULT_MSGS = [
   "🌙 Lights out by 9:30 PM",
   "🥗 Eat your greens",
 ];
+
+// ── STATE ────────────────────────────────────────────────────
+let cfg = loadCfg();
+let currentIdx = 0;
+let slideInterval;
+let slides = [];
+let wakelock = null;
 
 // ── CONFIG ────────────────────────────────────────────────────
 function loadCfg() {
