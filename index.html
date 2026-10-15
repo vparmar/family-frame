@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Photo Frame">
+<meta name="theme-color" content="#000000">
+<title>Family Photo Frame</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --glass: rgba(0,0,0,0.45);
+    --glass-border: rgba(255,255,255,0.12);
+    --blur: blur(20px);
+    --text: rgba(255,255,255,0.95);
+    --text-dim: rgba(255,255,255,0.6);
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: #000;
+    font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
+  /* ── SLIDESHOW ── */
+  #slideshow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.8s ease-in-out;
+    animation: kenburns 20s ease-in-out infinite alternate;
+  }
+
+  .slide.active { opacity: 1; }
+  .slide.prev   { opacity: 0; }
+
+  @keyframes kenburns {
+    0%   { transform: scale(1.0)   translate(0%,   0%);   }
+    25%  { transform: scale(1.05)  translate(-1%,  -0.5%); }
+    50%  { transform: scale(1.08)  translate(1%,   1%);   }
+    75%  { transform: scale(1.05)  translate(-0.5%,1%);   }
+    100% { transform: scale(1.0)   translate(0.5%, -1%);  }
+  }
+
+  /* vignette */
+  #slideshow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── OVERLAY LAYER ── */
+  #overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* ── CLOCK / DATE ── */
+  #clock-panel {
+    position: absolute;
+    top: 32px; left: 36px;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  #clock-time {
+    font-size: clamp(64px, 9vw, 96px);
+    font-weight: 200;
+    letter-spacing: -2px;
+    color: var(--text);
+    line-height: 1;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+  }
+
+  #clock-date {
+    font-size: clamp(14px, 1.8vw, 20px);
+    font-weight: 300;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+  }
+
+  /* ── WEATHER ── */
+  #weather-panel {
+    position: absolute;
+    top: 32px; right: 36px;
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 18px 24px;
+    pointer-events: auto;
+    text-align: right;
+    min-width: 180px;
+  }
+
+  #weather-temp {
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 200;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  #weather-icon {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  #weather-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  #weather-feels {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  #weather-city {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── TICKER ── */
+  /* ── CALENDAR PANEL ── */
+  #calendar-panel {
+    position: absolute;
+    top: 32px; left: 50%; transform: translateX(-50%);
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 14px 20px;
+    pointer-events: auto;
+    min-width: 280px;
+    max-width: 420px;
+  }
+
+  #calendar-panel h3 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 10px;
+  }
+
+  .cal-event {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .cal-event:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+  .cal-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #34c759;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .cal-dot.tomorrow { background: #ff9f0a; }
+  .cal-dot.future   { background: #636366; }
+
+  .cal-info { flex: 1; overflow: hidden; }
+
+  .cal-title {
+    font-size: 13px; font-weight: 400;
+    color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .cal-time {
+    font-size: 11px; color: var(--text-dim);
+    margin-top: 1px;
+  }
+
+  .cal-empty {
+    font-size: 13px; color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* ── CHORES PANEL ── */
+  #chores-panel {
+    position: absolute;
+    bottom: 56px; left: 36px;
+    display: flex;
+    gap: 10px;
+    pointer-events: auto;
+  }
+
+  .chore-col {
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 12px 16px;
+    min-width: 120px;
+  }
+
+  .chore-col h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .chore-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    cursor: pointer;
+  }
+
+  .chore-item:last-child { margin-bottom: 0; }
+
+  .chore-cb {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .chore-item.done .chore-cb {
+    background: #34c759;
+    border-color: #34c759;
+  }
+
+  .chore-item.done .chore-cb::after { content: '✓'; color: white; }
+
+  .chore-item .chore-label {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.3;
+    transition: opacity 0.2s;
+  }
+
+  .chore-item.done .chore-label {
+    opacity: 0.4;
+    text-decoration: line-through;
+    text-decoration-color: rgba(255,255,255,0.3);
+  }
+
+  .chore-reset {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--glass-border);
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+  .chore-reset:hover { color: rgba(255,255,255,0.5); }
+
+  #ticker-wrap {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border-top: 1px solid var(--glass-border);
+    height: 48px;
+    overflow: hidden;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  #ticker-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: ticker-scroll 40s linear infinite;
+    padding-left: 100vw;
+  }
+
+  #ticker-track span {
+    display: inline-block;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 300;
+    padding: 0 48px;
+    opacity: 0.85;
+  }
+
+  #ticker-track .dot {
+    color: rgba(255,255,255,0.3);
+    padding: 0 4px;
+    font-size: 20px;
+  }
+
+  @keyframes ticker-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── PROGRESS DOTS ── */
+  #progress-dots {
+    position: absolute;
+    bottom: 64px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px;
+    pointer-events: auto;
+  }
+
+  .dot-btn {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    border: none;
+  }
+  .dot-btn.active {
+    background: rgba(255,255,255,0.9);
+    transform: scale(1.4);
+  }
+
+  /* ── SETTINGS BUTTON ── */
+  #settings-btn {
+    position: absolute;
+    bottom: 56px; right: 36px;
+    width: 40px; height: 40px;
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--text-dim);
+    font-size: 18px;
+    cursor: pointer;
+    pointer-events: auto;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  #settings-btn:hover { background: rgba(255,255,255,0.15); }
+
+  /* ── SETTINGS PANEL ── */
+  #settings-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  #settings-panel.open { display: flex; }
+
+  #settings-box {
+    background: rgba(20,20,30,0.92);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 32px 36px;
+    width: min(520px, 90vw);
+    color: var(--text);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  #settings-box h2 {
+    font-size: 22px; font-weight: 400;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  #settings-close {
+    background: none; border: none;
+    color: var(--text-dim); font-size: 22px;
+    cursor: pointer; line-height: 1;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  #settings-close:hover { background: rgba(255,255,255,0.1); }
+
+  .setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 16px;
+  }
+
+  .setting-label {
+    font-size: 15px; font-weight: 300;
+    color: var(--text);
+  }
+
+  .setting-label small {
+    display: block;
+    font-size: 12px; color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .toggle {
+    position: relative;
+    width: 50px; height: 28px;
+    flex-shrink: 0;
+  }
+
+  .toggle input { opacity: 0; width: 0; height: 0; }
+
+  .toggle-track {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .toggle input:checked + .toggle-track { background: #34c759; }
+
+  .toggle-track::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 22px; height: 22px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+  .toggle input:checked + .toggle-track::after { transform: translateX(22px); }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 140px; height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+  }
+
+  textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    padding: 10px 14px;
+    resize: vertical;
+    min-height: 100px;
+    outline: none;
+    line-height: 1.6;
+  }
+  textarea:focus { border-color: rgba(255,255,255,0.3); }
+
+  .setting-section {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 12px;
+    margin-top: 24px;
+  }
+
+  #save-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+  #save-btn:hover { background: rgba(255,255,255,0.25); }
+
+  /* ── LOADING ── */
+  #loading {
+    position: fixed;
+    inset: 0; z-index: 50;
+    background: #000;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+    transition: opacity 0.8s;
+  }
+  #loading.hidden { opacity: 0; pointer-events: none; }
+
+  .spinner {
+    width: 36px; height: 36px;
+    border: 2px solid rgba(255,255,255,0.1);
+    border-top-color: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #loading p { color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; }
+</style>
+</head>
+<body>
+
+<!-- Loading screen -->
+<div id="loading">
+  <div class="spinner"></div>
+  <p>Preparing your photos…</p>
+</div>
+
+<!-- Slideshow -->
+<div id="slideshow"></div>
+
+<!-- Overlay -->
+<div id="overlay">
+  <!-- Clock -->
+  <div id="clock-panel">
+    <div id="clock-time">12:00</div>
+    <div id="clock-date">Thursday, January 1</div>
+  </div>
+
+  <!-- Weather -->
+  <div id="weather-panel">
+    <span id="weather-icon">🌤️</span>
+    <div id="weather-temp">—°</div>
+    <div id="weather-desc">Loading…</div>
+    <div id="weather-feels"></div>
+    <div id="weather-city">Vancouver, BC</div>
+  </div>
+
+  <!-- Calendar -->
+  <div id="calendar-panel" style="display:none">
+    <h3>📅 Upcoming</h3>
+    <div id="calendar-events"><div class="cal-empty">Loading…</div></div>
+  </div>
+
+  <!-- Chores -->
+  <div id="chores-panel"></div>
+
+  <!-- Progress dots -->
+  <div id="progress-dots"></div>
+
+  <!-- Settings button -->
+  <button id="settings-btn" title="Settings">⚙</button>
+
+  <!-- Ticker -->
+  <div id="ticker-wrap">
+    <div id="ticker-track"></div>
+  </div>
+</div>
+
+<!-- Settings panel -->
+<div id="settings-panel">
+  <div id="settings-box">
+    <h2>Settings <button id="settings-close">✕</button></h2>
+
+    <div class="setting-section">Display</div>
+
+    <div class="setting-row">
+      <div class="setting-label">Show Clock<small>Time and date overlay</small></div>
+      <label class="toggle">
+        <input type="checkbox" id="tog-clock" checked>
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">Show Weather<small>Vancouver, BC</small></div>
+      <label class="toggle">
+        <input type="checkbox" id="tog-weather" checked>
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">Show Ticker<small>Scrolling messages</small></div>
+      <label class="toggle">
+        <input type="checkbox" id="tog-ticker" checked>
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+
+    <div class="setting-section">Slideshow</div>
+
+    <div class="setting-row">
+      <div class="setting-label">Photo duration<small id="speed-val">15 seconds</small></div>
+      <input type="range" id="slide-speed" min="5" max="60" value="15" step="5">
+    </div>
+
+    <div class="setting-section">Google Calendar</div>
+    <div class="setting-row">
+      <div class="setting-label">Show Calendar<small>Today + upcoming events</small></div>
+      <label class="toggle">
+        <input type="checkbox" id="tog-calendar">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">iCal URL <span style="opacity:0.5">(Google Calendar → Settings → Secret address in iCal format)</span></div>
+      <input type="text" id="cal-url" placeholder="webcal://calendar.google.com/calendar/ical/…"
+        style="width:100%;background:rgba(255,255,255,0.08);border:1px solid var(--glass-border);border-radius:10px;color:var(--text);font-family:inherit;font-size:12px;padding:8px 12px;outline:none">
+    </div>
+
+    <div class="setting-section">Chores — S</div>
+    <textarea id="chores-S" placeholder="One task per line…" rows="3"></textarea>
+
+    <div class="setting-section">Chores — N</div>
+    <textarea id="chores-N" placeholder="One task per line…" rows="4"></textarea>
+
+    <div class="setting-section">Chores — Z</div>
+    <textarea id="chores-Z" placeholder="One task per line…" rows="5"></textarea>
+
+    <div class="setting-section">Ticker Messages</div>
+    <textarea id="ticker-text" placeholder="One message per line…"></textarea>
+
+    <button id="save-btn">Save Settings</button>
+  </div>
+</div>
+
+<script>
+// ── PHOTOS ──────────────────────────────────────────────────
+const PHOTOS = [
+  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80', // Swiss Alps
+  'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=80', // Forest light
+  'https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=1600&q=80', // Iceland waterfall
+  'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1600&q=80', // Green mountains
+  'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1600&q=80', // Autumn forest
+  'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=1600&q=80', // Orange flowers
+  'https://images.unsplash.com/photo-1433477155337-9aea4e790195?w=1600&q=80', // Mountain lake
+  'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=80', // Lake mountains
+  'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=80', // Starry mountains
+  'https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?w=1600&q=80', // Coastal sunset
+  'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1600&q=80', // Tropical beach
+  'https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1600&q=80', // Green valley
+];
+
+// ── STATE ────────────────────────────────────────────────────
+let cfg = loadCfg();
+let currentIdx = 0;
+let slideInterval;
+let slides = [];
+let wakelock = null;
+
+// ── DEFAULT TICKER MESSAGES ───────────────────────────────────
+const DEFAULT_MSGS = [
+  "📚 Homework before screens",
+  "🎹 Piano practice: 45 min",
+  "🎻 Violin: 15 min",
+  "🎺 Trumpet: 15 min",
+  "🧹 Vacuum your room today",
+  "🏃 Neeman — sprinting practice",
+  "🛒 Grocery run today",
+  "💙 Have a great day!",
+  "🌙 Lights out by 9:30 PM",
+  "🥗 Eat your greens",
+];
+
+// ── CONFIG ────────────────────────────────────────────────────
+function loadCfg() {
+  try {
+    const s = localStorage.getItem('pf-cfg');
+    if (s) return JSON.parse(s);
+  } catch(e) {}
+  return {
+    showClock:    true,
+    showWeather:  true,
+    showTicker:   true,
+    showCalendar: false,
+    calUrl:       '',
+    speed:        15,
+    messages:     DEFAULT_MSGS.join('\n'),
+  };
+}
+
+function saveCfg() {
+  try { localStorage.setItem('pf-cfg', JSON.stringify(cfg)); } catch(e) {}
+}
+
+// ── BUILD SLIDES ──────────────────────────────────────────────
+function buildSlides() {
+  const ss = document.getElementById('slideshow');
+  ss.innerHTML = '';
+  slides = [];
+  PHOTOS.forEach((url, i) => {
+    const div = document.createElement('div');
+    div.className = 'slide';
+    div.style.backgroundImage = `url(${url})`;
+    ss.appendChild(div);
+    slides.push(div);
+  });
+
+  // progress dots
+  const pd = document.getElementById('progress-dots');
+  pd.innerHTML = '';
+  PHOTOS.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'dot-btn' + (i === 0 ? ' active' : '');
+    btn.onclick = () => goTo(i);
+    pd.appendChild(btn);
+  });
+}
+
+function goTo(idx) {
+  slides[currentIdx].className = 'slide prev';
+  setTimeout(() => {
+    if (slides[currentIdx]) slides[currentIdx].className = 'slide';
+  }, 2000);
+  currentIdx = idx;
+  slides[currentIdx].className = 'slide active';
+  document.querySelectorAll('.dot-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === currentIdx);
+  });
+}
+
+function nextSlide() {
+  goTo((currentIdx + 1) % slides.length);
+}
+
+function startSlideshow() {
+  clearInterval(slideInterval);
+  goTo(0);
+  slideInterval = setInterval(nextSlide, cfg.speed * 1000);
+}
+
+// ── CLOCK ────────────────────────────────────────────────────
+function tickClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('clock-time').textContent = `${h}:${m}`;
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+  document.getElementById('clock-date').textContent =
+    `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
+}
+
+// ── WEATHER (open-meteo, no key) ─────────────────────────────
+const WMO = {
+  0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
+  45:'Fog',48:'Icy fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',
+  61:'Light rain',63:'Rain',65:'Heavy rain',71:'Light snow',73:'Snow',75:'Heavy snow',
+  77:'Snow grains',80:'Light showers',81:'Showers',82:'Heavy showers',
+  85:'Snow showers',86:'Heavy snow showers',
+  95:'Thunderstorm',96:'Thunderstorm + hail',99:'Thunderstorm + heavy hail',
+};
+
+const WMO_ICON = {
+  0:'☀️',1:'🌤️',2:'⛅',3:'☁️',
+  45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',
+  61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',
+  77:'🌨️',80:'🌦️',81:'🌧️',82:'⛈️',
+  85:'🌨️',86:'🌨️',95:'⛈️',96:'⛈️',99:'⛈️',
+};
+
+async function fetchWeather() {
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=49.25&longitude=-123.11' +
+      '&current=temperature_2m,apparent_temperature,weathercode' +
+      '&temperature_unit=celsius&timezone=America%2FVancouver';
+    const r = await fetch(url);
+    const d = await r.json();
+    const c = d.current;
+    const code = c.weathercode;
+    document.getElementById('weather-icon').textContent = WMO_ICON[code] || '🌤️';
+    document.getElementById('weather-temp').textContent = `${Math.round(c.temperature_2m)}°`;
+    document.getElementById('weather-desc').textContent = WMO[code] || 'Unknown';
+    document.getElementById('weather-feels').textContent =
+      `Feels like ${Math.round(c.apparent_temperature)}°C`;
+  } catch(e) {
+    document.getElementById('weather-desc').textContent = 'Unavailable';
+  }
+}
+
+// ── TICKER ───────────────────────────────────────────────────
+function buildTicker() {
+  const msgs = cfg.messages.split('\n').map(m=>m.trim()).filter(Boolean);
+  if (!msgs.length) return;
+  const track = document.getElementById('ticker-track');
+  // duplicate for seamless loop
+  const items = [...msgs, ...msgs];
+  track.innerHTML = items.map((m,i) =>
+    `<span>${m}</span><span class="dot">·</span>`
+  ).join('');
+}
+
+// ── VISIBILITY ───────────────────────────────────────────────
+function applyVisibility() {
+  document.getElementById('clock-panel').style.display   = cfg.showClock    ? '' : 'none';
+  document.getElementById('weather-panel').style.display = cfg.showWeather  ? '' : 'none';
+  document.getElementById('ticker-wrap').style.display   = cfg.showTicker   ? '' : 'none';
+  if (!cfg.showCalendar) document.getElementById('calendar-panel').style.display = 'none';
+}
+
+// ── SETTINGS UI ───────────────────────────────────────────────
+function openSettings() {
+  document.getElementById('tog-clock').checked   = cfg.showClock;
+  document.getElementById('tog-weather').checked = cfg.showWeather;
+  document.getElementById('tog-ticker').checked  = cfg.showTicker;
+  document.getElementById('slide-speed').value   = cfg.speed;
+  document.getElementById('speed-val').textContent = `${cfg.speed} seconds`;
+  document.getElementById('ticker-text').value      = cfg.messages;
+  document.getElementById('tog-calendar').checked   = cfg.showCalendar;
+  document.getElementById('cal-url').value          = cfg.calUrl || '';
+  // populate chore editors
+  const def = getChoresDef();
+  def.forEach(col => {
+    const el = document.getElementById('chores-' + col.id);
+    if (el) el.value = col.tasks.join('\n');
+  });
+  document.getElementById('settings-panel').classList.add('open');
+}
+
+function closeSettings() {
+  document.getElementById('settings-panel').classList.remove('open');
+}
+
+document.getElementById('settings-btn').onclick = openSettings;
+document.getElementById('settings-close').onclick = closeSettings;
+document.getElementById('settings-panel').onclick = e => {
+  if (e.target === document.getElementById('settings-panel')) closeSettings();
+};
+
+document.getElementById('slide-speed').oninput = function() {
+  document.getElementById('speed-val').textContent = `${this.value} seconds`;
+};
+
+document.getElementById('save-btn').onclick = () => {
+  cfg.showClock    = document.getElementById('tog-clock').checked;
+  cfg.showWeather  = document.getElementById('tog-weather').checked;
+  cfg.showTicker   = document.getElementById('tog-ticker').checked;
+  cfg.showCalendar = document.getElementById('tog-calendar').checked;
+  cfg.calUrl       = document.getElementById('cal-url').value.trim();
+  cfg.speed        = parseInt(document.getElementById('slide-speed').value);
+  cfg.messages     = document.getElementById('ticker-text').value;
+  saveCfg();
+  // save chore definitions
+  const def = getChoresDef();
+  def.forEach(col => {
+    const el = document.getElementById('chores-' + col.id);
+    if (el) {
+      col.tasks = el.value.split('\n').map(t=>t.trim()).filter(Boolean);
+    }
+  });
+  saveChoresDef(def);
+  // clear checked state since tasks may have changed
+  localStorage.removeItem('pf-chores');
+  applyVisibility();
+  buildTicker();
+  buildChores();
+  clearInterval(slideInterval);
+  slideInterval = setInterval(nextSlide, cfg.speed * 1000);
+  closeSettings();
+};
+
+// ── WAKE LOCK ────────────────────────────────────────────────
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      wakelock = await navigator.wakeLock.request('screen');
+    }
+  } catch(e) { /* silently ignore */ }
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') requestWakeLock();
+});
+
+// ── CALENDAR ─────────────────────────────────────────────────
+async function fetchCalendar() {
+  const url = cfg.calUrl;
+  const panel = document.getElementById('calendar-panel');
+  if (!cfg.showCalendar || !url) { panel.style.display = 'none'; return; }
+  panel.style.display = '';
+
+  try {
+    // Use allorigins CORS proxy to fetch the iCal
+    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url.replace('webcal://', 'https://'));
+    const r = await fetch(proxyUrl);
+    const data = await r.json();
+    const ical = data.contents;
+    const events = parseICal(ical);
+    renderCalendar(events);
+  } catch(e) {
+    document.getElementById('calendar-events').innerHTML = '<div class="cal-empty">Couldn\'t load calendar</div>';
+  }
+}
+
+function parseICal(text) {
+  const events = [];
+  const blocks = text.split('BEGIN:VEVENT');
+  for (let i = 1; i < blocks.length; i++) {
+    const block = blocks[i];
+    const get = (key) => {
+      const m = block.match(new RegExp(key + '[^:]*:([^\\r\\n]+)'));
+      return m ? m[1].trim() : '';
+    };
+    const summary = get('SUMMARY') || 'Event';
+    let dtstart = get('DTSTART') || '';
+    let allDay = false;
+
+    // parse date
+    let date;
+    if (dtstart.match(/^\d{8}$/)) {
+      allDay = true;
+      date = new Date(dtstart.slice(0,4), dtstart.slice(4,6)-1, dtstart.slice(6,8));
+    } else if (dtstart.match(/^\d{8}T\d{6}/)) {
+      const s = dtstart.replace('Z','');
+      date = new Date(
+        s.slice(0,4), s.slice(4,6)-1, s.slice(6,8),
+        s.slice(9,11), s.slice(11,13), s.slice(13,15)
+      );
+      if (dtstart.endsWith('Z')) date = new Date(date.getTime() - date.getTimezoneOffset()*60000);
+    } else { continue; }
+
+    events.push({ summary: summary.replace(/\\,/g,',').replace(/\\n/g,' '), date, allDay });
+  }
+  // sort and filter to next 7 days
+  const now = new Date();
+  const cutoff = new Date(now.getTime() + 7*24*60*60*1000);
+  return events
+    .filter(e => e.date >= new Date(now.toDateString()) && e.date <= cutoff)
+    .sort((a,b) => a.date - b.date)
+    .slice(0, 5);
+}
+
+function renderCalendar(events) {
+  const el = document.getElementById('calendar-events');
+  if (!events.length) { el.innerHTML = '<div class="cal-empty">Nothing coming up 🎉</div>'; return; }
+
+  const now = new Date();
+  const today = new Date(now.toDateString());
+  const tomorrow = new Date(today.getTime() + 86400000);
+
+  el.innerHTML = events.map(ev => {
+    const evDay = new Date(new Date(ev.date).toDateString());
+    let dotClass = 'future';
+    let timeStr;
+    if (+evDay === +today) { dotClass = ''; timeStr = ev.allDay ? 'All day' : fmtTime(ev.date) + ' today'; }
+    else if (+evDay === +tomorrow) { dotClass = 'tomorrow'; timeStr = ev.allDay ? 'Tomorrow' : 'Tomorrow · ' + fmtTime(ev.date); }
+    else { timeStr = fmtDate(ev.date) + (ev.allDay ? '' : ' · ' + fmtTime(ev.date)); }
+
+    return `<div class="cal-event">
+      <div class="cal-dot ${dotClass}"></div>
+      <div class="cal-info">
+        <div class="cal-title">${escHtml(ev.summary)}</div>
+        <div class="cal-time">${timeStr}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function fmtTime(d) {
+  const h = d.getHours(), m = d.getMinutes();
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  return `${h % 12 || 12}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+
+function fmtDate(d) {
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${days[d.getDay()]} ${months[d.getMonth()]} ${d.getDate()}`;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── CHORES ───────────────────────────────────────────────────
+const CHORES_DEFAULT = [
+  { id: 'S', label: 'S', tasks: ['Vacuum', 'Exercise'] },
+  { id: 'N', label: 'N', tasks: ['Vacuum', 'Homework', 'Sprinting'] },
+  { id: 'Z', label: 'Z', tasks: ['Vacuum', 'Piano (45 min)', 'Violin (15 min)', 'Trumpet (15 min)'] },
+];
+
+function loadChoresDef() {
+  try {
+    const s = localStorage.getItem('pf-chores-def');
+    return s ? JSON.parse(s) : CHORES_DEFAULT;
+  } catch(e) { return CHORES_DEFAULT; }
+}
+
+function saveChoresDef(def) {
+  try { localStorage.setItem('pf-chores-def', JSON.stringify(def)); } catch(e) {}
+}
+
+function getChoresDef() { return loadChoresDef(); }
+
+function loadChores() {
+  try {
+    const s = localStorage.getItem('pf-chores');
+    return s ? JSON.parse(s) : {};
+  } catch(e) { return {}; }
+}
+
+function saveChores(state) {
+  try { localStorage.setItem('pf-chores', JSON.stringify(state)); } catch(e) {}
+}
+
+// Reset chores at midnight
+function checkDailyReset() {
+  try {
+    const lastReset = localStorage.getItem('pf-chores-date');
+    const today = new Date().toDateString();
+    if (lastReset !== today) {
+      localStorage.removeItem('pf-chores');
+      localStorage.setItem('pf-chores-date', today);
+      buildChores();
+    }
+  } catch(e) {}
+}
+
+function buildChores() {
+  const state = loadChores();
+  const panel = document.getElementById('chores-panel');
+  panel.innerHTML = '';
+
+  getChoresDef().forEach(col => {
+    const colEl = document.createElement('div');
+    colEl.className = 'chore-col';
+    colEl.innerHTML = `<h3>${col.label}</h3>`;
+
+    col.tasks.forEach((task, ti) => {
+      const key = `${col.id}-${ti}`;
+      const done = !!state[key];
+      const item = document.createElement('div');
+      item.className = 'chore-item' + (done ? ' done' : '');
+      item.innerHTML = `<div class="chore-cb"></div><div class="chore-label">${task}</div>`;
+      item.onclick = () => {
+        const s = loadChores();
+        if (s[key]) delete s[key];
+        else s[key] = true;
+        saveChores(s);
+        item.classList.toggle('done');
+      };
+      colEl.appendChild(item);
+    });
+
+    const reset = document.createElement('div');
+    reset.className = 'chore-reset';
+    reset.textContent = 'Reset';
+    reset.onclick = e => {
+      e.stopPropagation();
+      const s = loadChores();
+      col.tasks.forEach((_, ti) => delete s[`${col.id}-${ti}`]);
+      saveChores(s);
+      buildChores();
+    };
+    colEl.appendChild(reset);
+    panel.appendChild(colEl);
+  });
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+async function init() {
+  buildSlides();
+  applyVisibility();
+  buildTicker();
+  buildChores();
+  fetchCalendar();
+  checkDailyReset();
+  setInterval(checkDailyReset, 60 * 1000);
+  tickClock();
+
+  // preload first 3 images
+  let loaded = 0;
+  const preload = Math.min(3, PHOTOS.length);
+  const preloadDone = () => {
+    loaded++;
+    if (loaded >= preload) {
+      startSlideshow();
+      const l = document.getElementById('loading');
+      l.classList.add('hidden');
+      setTimeout(() => l.style.display = 'none', 1000);
+    }
+  };
+  for (let i = 0; i < preload; i++) {
+    const img = new Image();
+    img.onload = img.onerror = preloadDone;
+    img.src = PHOTOS[i];
+  }
+
+  // clock tick every second
+  setInterval(tickClock, 1000);
+
+  // weather fetch + refresh every 10 min
+  fetchWeather();
+  setInterval(fetchWeather, 10 * 60 * 1000);
+
+  // calendar refresh every 15 min
+  setInterval(fetchCalendar, 15 * 60 * 1000);
+
+  // wake lock
+  requestWakeLock();
+}
+
+init();
+</script>
+</body>
+</html>
