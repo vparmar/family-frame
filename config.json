@@ -1,0 +1,30 @@
+{
+  "_note": "Edit this file on GitHub to update the photo frame. Changes deploy in ~60 seconds.",
+  "chores": {
+    "S": [
+      "Vacuum",
+      "Exercise"
+    ],
+    "N": [
+      "Vacuum",
+      "Homework",
+      "Sprinting"
+    ],
+    "Z": [
+      "Vacuum",
+      "Piano (45 min)",
+      "Violin (15 min)",
+      "Trumpet (15 min)"
+    ]
+  },
+  "ticker": [
+    "📚 Homework before screens",
+    "🎹 Piano practice: 45 min",
+    "🎻 Violin: 15 min",
+    "🎺 Trumpet: 15 min",
+    "🧹 Vacuum your room today",
+    "🏃 Neeman — sprinting practice",
+    "💙 Have a great day!",
+    "🌙 Lights out by 9:30 PM"
+  ]
+}
