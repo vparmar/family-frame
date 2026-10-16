@@ -638,7 +638,7 @@
 
     <div class="setting-row">
       <div class="setting-label">Photo duration<small id="speed-val">15 seconds</small></div>
-      <input type="range" id="slide-speed" min="5" max="60" value="15" step="5">
+      <input type="range" id="slide-speed" min="5" max="60" value="15" step="1">
     </div>
 
     <div class="setting-section">Google Calendar</div>
@@ -902,8 +902,7 @@ document.getElementById('save-btn').onclick = () => {
   applyVisibility();
   buildTicker();
   buildChores();
-  clearInterval(slideInterval);
-  slideInterval = setInterval(nextSlide, cfg.speed * 1000);
+  startSlideshow();
   closeSettings();
 };
 
