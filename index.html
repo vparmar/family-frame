@@ -928,11 +928,11 @@ async function fetchCalendar() {
   panel.style.display = '';
 
   try {
-    // Use allorigins CORS proxy to fetch the iCal
-    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url.replace('webcal://', 'https://'));
-    const r = await fetch(proxyUrl);
-    const data = await r.json();
-    const ical = data.contents;
+    // Use same-origin Cloudflare Pages Function proxy (functions/ical-proxy.js)
+    const cleanUrl = url.replace('webcal://', 'https://');
+    const r = await fetch('/ical-proxy?url=' + encodeURIComponent(cleanUrl), { signal: AbortSignal.timeout(15000) });
+    const ical = await r.text();
+    if (!ical.includes('BEGIN:VCALENDAR')) throw new Error('invalid response');
     const events = parseICal(ical);
     renderCalendar(events);
   } catch(e) {
