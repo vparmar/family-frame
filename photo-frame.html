@@ -693,7 +693,7 @@ const DEFAULT_MSGS = [
   "📚 Homework before screens",
   "🎹 Piano practice: 45 min",
   "🎻 Violin: 15 min",
-  "🌺 Trumpet: 15 min",
+  "🎺 Trumpet: 15 min",
   "🧹 Vacuum your room today",
   "🏃 Neeman — sprinting practice",
   "🛒 Grocery run today",
@@ -928,27 +928,11 @@ async function fetchCalendar() {
   panel.style.display = '';
 
   try {
-    // Try multiple CORS proxies in sequence
+    // Use same-origin Cloudflare Pages Function proxy (functions/ical-proxy.js)
     const cleanUrl = url.replace('webcal://', 'https://');
-    const proxies = [
-      async () => {
-        const r = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(cleanUrl), { signal: AbortSignal.timeout(8000) });
-        const d = await r.json(); return d.contents;
-      },
-      async () => {
-        const r = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(cleanUrl), { signal: AbortSignal.timeout(8000) });
-        return await r.text();
-      },
-      async () => {
-        const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(cleanUrl), { signal: AbortSignal.timeout(8000) });
-        return await r.text();
-      },
-    ];
-    let ical = null;
-    for (const proxy of proxies) {
-      try { const t = await proxy(); if (t && t.includes('BEGIN:VCALENDAR')) { ical = t; break; } } catch(e) {}
-    }
-    if (!ical) throw new Error('all proxies failed');
+    const r = await fetch('/ical-proxy?url=' + encodeURIComponent(cleanUrl), { signal: AbortSignal.timeout(15000) });
+    const ical = await r.text();
+    if (!ical.includes('BEGIN:VCALENDAR')) throw new Error('invalid response');
     const events = parseICal(ical);
     renderCalendar(events);
   } catch(e) {
