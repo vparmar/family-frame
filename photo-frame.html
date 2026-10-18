@@ -78,141 +78,193 @@
   /* ── CLOCK / DATE ── */
   #clock-panel {
     position: absolute;
-    top: 32px; left: 36px;
+    top: 12px; left: 16px;
     pointer-events: auto;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
+    z-index: 12;
   }
 
   #clock-time {
-    font-size: clamp(64px, 9vw, 96px);
+    font-size: clamp(32px, 4vw, 48px);
     font-weight: 200;
-    letter-spacing: -2px;
+    letter-spacing: -1px;
     color: var(--text);
     line-height: 1;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+    text-shadow: 0 2px 24px rgba(0,0,0,0.8);
   }
 
   #clock-date {
-    font-size: clamp(14px, 1.8vw, 20px);
+    font-size: clamp(11px, 1.4vw, 15px);
     font-weight: 300;
     color: var(--text-dim);
     letter-spacing: 0.5px;
     text-shadow: 0 1px 8px rgba(0,0,0,0.8);
   }
 
-  /* ── WEATHER ── */
+  /* ── WEATHER (bottom right, above ticker) ── */
   #weather-panel {
     position: absolute;
-    top: 32px; right: 36px;
+    bottom: 56px; right: 36px;
     background: var(--glass);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
     border: 1px solid var(--glass-border);
     border-radius: 20px;
-    padding: 18px 24px;
+    padding: 14px 20px;
     pointer-events: auto;
     text-align: right;
-    min-width: 180px;
+    min-width: 160px;
   }
 
   #weather-temp {
-    font-size: clamp(36px, 5vw, 52px);
+    font-size: clamp(30px, 4vw, 44px);
     font-weight: 200;
     color: var(--text);
     line-height: 1;
   }
 
   #weather-icon {
-    font-size: 36px;
+    font-size: 30px;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
 
   #weather-desc {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-dim);
     margin-top: 4px;
   }
 
   #weather-feels {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-dim);
   }
 
   #weather-city {
-    font-size: 11px;
+    font-size: 10px;
     color: rgba(255,255,255,0.35);
-    margin-top: 6px;
+    margin-top: 4px;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
 
-  /* ── TICKER ── */
-  /* ── CALENDAR PANEL ── */
-  #calendar-panel {
+  /* ── WEEK STRIP ── */
+  #week-strip {
     position: absolute;
-    top: 32px; left: 50%; transform: translateX(-50%);
+    top: 0; left: 0; right: 0;
     background: var(--glass);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 14px 20px;
+    border-bottom: 1px solid var(--glass-border);
+    padding: 10px 12px 10px 160px; /* left gap for clock */
     pointer-events: auto;
-    min-width: 280px;
-    max-width: 420px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  #week-strip::-webkit-scrollbar { display: none; }
 
-  #calendar-panel h3 {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: rgba(255,255,255,0.35);
-    margin-bottom: 10px;
-  }
-
-  .cal-event {
+  #week-days {
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .cal-event:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-
-  .cal-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: #34c759;
-    margin-top: 4px;
-    flex-shrink: 0;
+    gap: 4px;
+    min-width: 0;
   }
 
-  .cal-dot.tomorrow { background: #ff9f0a; }
-  .cal-dot.future   { background: #636366; }
+  .week-day {
+    flex: 1;
+    min-width: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 6px 8px;
+    border-radius: 12px;
+    transition: background 0.2s;
+  }
 
-  .cal-info { flex: 1; overflow: hidden; }
+  .week-day.today {
+    background: rgba(255,255,255,0.12);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+  }
 
-  .cal-title {
-    font-size: 13px; font-weight: 400;
+  .week-day-name {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .week-day.today .week-day-name {
+    color: rgba(255,255,255,0.75);
+  }
+
+  .week-day-num {
+    font-size: 20px;
+    font-weight: 200;
     color: var(--text);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    line-height: 1.1;
+    margin-bottom: 5px;
   }
 
-  .cal-time {
-    font-size: 11px; color: var(--text-dim);
-    margin-top: 1px;
+  .week-day.today .week-day-num {
+    font-weight: 400;
+    color: #fff;
   }
 
-  .cal-empty {
-    font-size: 13px; color: var(--text-dim);
-    font-style: italic;
+  .week-events {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    align-items: stretch;
   }
 
+  .week-event {
+    border-radius: 5px;
+    padding: 2px 5px;
+    font-size: 10px;
+    line-height: 1.35;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 100%;
+  }
+
+  .week-event.today-ev {
+    background: rgba(52,199,89,0.28);
+    border-left: 2px solid #34c759;
+  }
+
+  .week-event.tomorrow-ev {
+    background: rgba(255,159,10,0.22);
+    border-left: 2px solid #ff9f0a;
+  }
+
+  .week-event.other-ev {
+    background: rgba(255,255,255,0.08);
+    border-left: 2px solid rgba(255,255,255,0.25);
+  }
+
+  .ev-time {
+    font-size: 9px;
+    color: var(--text-dim);
+    display: block;
+  }
+
+  .ev-title {
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
+  }
+
+  /* ── TICKER ── */
   /* ── CHORES PANEL ── */
   #chores-panel {
     position: absolute;
@@ -364,7 +416,7 @@
   /* ── SETTINGS BUTTON ── */
   #settings-btn {
     position: absolute;
-    bottom: 56px; right: 36px;
+    bottom: 56px; right: 200px;
     width: 40px; height: 40px;
     background: var(--glass);
     backdrop-filter: var(--blur);
@@ -573,7 +625,7 @@
     <div id="clock-date">Thursday, January 1</div>
   </div>
 
-  <!-- Weather -->
+  <!-- Weather (bottom right, above ticker) -->
   <div id="weather-panel">
     <span id="weather-icon">🌤️</span>
     <div id="weather-temp">—°</div>
@@ -582,10 +634,9 @@
     <div id="weather-city">Vancouver, BC</div>
   </div>
 
-  <!-- Calendar -->
-  <div id="calendar-panel" style="display:none">
-    <h3>📅 Upcoming</h3>
-    <div id="calendar-events"><div class="cal-empty">Loading…</div></div>
+  <!-- Week Strip (full-width top bar) -->
+  <div id="week-strip" style="display:none">
+    <div id="week-days"></div>
   </div>
 
   <!-- Chores -->
@@ -643,7 +694,7 @@
 
     <div class="setting-section">Google Calendar</div>
     <div class="setting-row">
-      <div class="setting-label">Show Calendar<small>Today + upcoming events</small></div>
+      <div class="setting-label">Show Calendar<small>Week-at-a-glance strip</small></div>
       <label class="toggle">
         <input type="checkbox" id="tog-calendar">
         <span class="toggle-track"></span>
@@ -663,6 +714,13 @@
 
     <div class="setting-section">Chores — Z</div>
     <textarea id="chores-Z" placeholder="One task per line…" rows="5"></textarea>
+
+    <div class="setting-section">Chore Reminder Time</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <input type="time" id="chore-reminder" value="20:00"
+        style="background:rgba(255,255,255,0.08);border:1px solid var(--glass-border);border-radius:10px;color:var(--text);font-family:inherit;font-size:14px;padding:8px 12px;outline:none">
+      <span style="font-size:12px;color:var(--text-dim)">Evening reminder if chores aren't done</span>
+    </div>
 
     <div class="setting-section">Ticker Messages</div>
     <textarea id="ticker-text" placeholder="One message per line…"></textarea>
@@ -708,6 +766,8 @@ let currentIdx = 0;
 let slideInterval;
 let slides = [];
 let wakelock = null;
+let calEvents = []; // today's parsed calendar events for ticker
+let _choresDoneNotified = false;
 
 // ── CONFIG ────────────────────────────────────────────────────
 function loadCfg() {
@@ -716,13 +776,14 @@ function loadCfg() {
     if (s) return JSON.parse(s);
   } catch(e) {}
   return {
-    showClock:    true,
-    showWeather:  true,
-    showTicker:   true,
-    showCalendar: false,
-    calUrl:       '',
-    speed:        15,
-    messages:     DEFAULT_MSGS.join('\n'),
+    showClock:      true,
+    showWeather:    true,
+    showTicker:     true,
+    showCalendar:   false,
+    calUrl:         '',
+    speed:          15,
+    messages:       DEFAULT_MSGS.join('\n'),
+    choreReminder:  '20:00',
   };
 }
 
@@ -828,12 +889,27 @@ async function fetchWeather() {
 
 // ── TICKER ───────────────────────────────────────────────────
 function buildTicker() {
-  const msgs = cfg.messages.split('\n').map(m=>m.trim()).filter(Boolean);
-  if (!msgs.length) return;
+  const customMsgs = cfg.messages.split('\n').map(m=>m.trim()).filter(Boolean);
+
+  // Mix in today's calendar events
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const todayItems = calEvents
+    .filter(e => {
+      const d = new Date(e.date);
+      d.setHours(0,0,0,0);
+      return d.toDateString() === today.toDateString();
+    })
+    .map(e => e.allDay
+      ? `📅 Today: ${e.summary}`
+      : `📅 ${fmtTime(e.date)} — ${e.summary}`);
+
+  const allMsgs = [...todayItems, ...customMsgs];
+  if (!allMsgs.length) return;
   const track = document.getElementById('ticker-track');
   // duplicate for seamless loop
-  const items = [...msgs, ...msgs];
-  track.innerHTML = items.map((m,i) =>
+  const items = [...allMsgs, ...allMsgs];
+  track.innerHTML = items.map(m =>
     `<span>${m}</span><span class="dot">·</span>`
   ).join('');
 }
@@ -843,7 +919,7 @@ function applyVisibility() {
   document.getElementById('clock-panel').style.display   = cfg.showClock    ? '' : 'none';
   document.getElementById('weather-panel').style.display = cfg.showWeather  ? '' : 'none';
   document.getElementById('ticker-wrap').style.display   = cfg.showTicker   ? '' : 'none';
-  if (!cfg.showCalendar) document.getElementById('calendar-panel').style.display = 'none';
+  if (!cfg.showCalendar) document.getElementById('week-strip').style.display = 'none';
 }
 
 // ── SETTINGS UI ───────────────────────────────────────────────
@@ -856,6 +932,7 @@ function openSettings() {
   document.getElementById('ticker-text').value      = cfg.messages;
   document.getElementById('tog-calendar').checked   = cfg.showCalendar;
   document.getElementById('cal-url').value          = cfg.calUrl || '';
+  document.getElementById('chore-reminder').value   = cfg.choreReminder || '20:00';
   // populate chore editors
   const def = getChoresDef();
   def.forEach(col => {
@@ -886,7 +963,8 @@ document.getElementById('save-btn').onclick = () => {
   cfg.showCalendar = document.getElementById('tog-calendar').checked;
   cfg.calUrl       = document.getElementById('cal-url').value.trim();
   cfg.speed        = parseInt(document.getElementById('slide-speed').value);
-  cfg.messages     = document.getElementById('ticker-text').value;
+  cfg.messages      = document.getElementById('ticker-text').value;
+  cfg.choreReminder = document.getElementById('chore-reminder').value || '20:00';
   saveCfg();
   // save chore definitions
   const def = getChoresDef();
@@ -919,12 +997,12 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') requestWakeLock();
 });
 
-// ── CALENDAR ─────────────────────────────────────────────────
+// ── CALENDAR / WEEK STRIP ────────────────────────────────────
 async function fetchCalendar() {
   const url = cfg.calUrl;
-  const panel = document.getElementById('calendar-panel');
-  if (!cfg.showCalendar || !url) { panel.style.display = 'none'; return; }
-  panel.style.display = '';
+  const strip = document.getElementById('week-strip');
+  if (!cfg.showCalendar || !url) { strip.style.display = 'none'; return; }
+  strip.style.display = '';
 
   try {
     // Use same-origin Cloudflare Pages Function proxy (functions/ical-proxy.js)
@@ -933,15 +1011,27 @@ async function fetchCalendar() {
     const ical = await r.text();
     if (!ical.includes('BEGIN:VCALENDAR')) throw new Error('invalid response');
     const events = parseICal(ical);
-    renderCalendar(events);
+    calEvents = events; // expose for ticker
+    renderWeekStrip(events);
+    buildTicker(); // refresh ticker with today's events
   } catch(e) {
-    document.getElementById('calendar-events').innerHTML = '<div class="cal-empty">Couldn\'t load calendar</div>';
+    document.getElementById('week-days').innerHTML =
+      '<div style="color:var(--text-dim);font-size:12px;padding:8px;">Couldn\'t load calendar</div>';
   }
 }
 
 function parseICal(text) {
   const events = [];
   const blocks = text.split('BEGIN:VEVENT');
+
+  // Current week bounds: Sunday 00:00 → Saturday 23:59:59
+  const now = new Date();
+  const startOfWeek = new Date(now);
+  startOfWeek.setHours(0,0,0,0);
+  startOfWeek.setDate(now.getDate() - now.getDay()); // back to Sunday
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 7); // next Sunday (exclusive)
+
   for (let i = 1; i < blocks.length; i++) {
     const block = blocks[i];
     const get = (key) => {
@@ -966,41 +1056,57 @@ function parseICal(text) {
       if (dtstart.endsWith('Z')) date = new Date(date.getTime() - date.getTimezoneOffset()*60000);
     } else { continue; }
 
+    // Filter to current week only
+    if (date < startOfWeek || date >= endOfWeek) continue;
+
     events.push({ summary: summary.replace(/\\,/g,',').replace(/\\n/g,' '), date, allDay });
   }
-  // sort and filter to next 7 days
-  const now = new Date();
-  const cutoff = new Date(now.getTime() + 7*24*60*60*1000);
-  return events
-    .filter(e => e.date >= new Date(now.toDateString()) && e.date <= cutoff)
-    .sort((a,b) => a.date - b.date)
-    .slice(0, 5);
+
+  return events.sort((a,b) => a.date - b.date);
 }
 
-function renderCalendar(events) {
-  const el = document.getElementById('calendar-events');
-  if (!events.length) { el.innerHTML = '<div class="cal-empty">Nothing coming up 🎉</div>'; return; }
-
+function renderWeekStrip(events) {
+  const container = document.getElementById('week-days');
   const now = new Date();
-  const today = new Date(now.toDateString());
+  const today = new Date(now);
+  today.setHours(0,0,0,0);
   const tomorrow = new Date(today.getTime() + 86400000);
 
-  el.innerHTML = events.map(ev => {
-    const evDay = new Date(new Date(ev.date).toDateString());
-    let dotClass = 'future';
-    let timeStr;
-    if (+evDay === +today) { dotClass = ''; timeStr = ev.allDay ? 'All day' : fmtTime(ev.date) + ' today'; }
-    else if (+evDay === +tomorrow) { dotClass = 'tomorrow'; timeStr = ev.allDay ? 'Tomorrow' : 'Tomorrow · ' + fmtTime(ev.date); }
-    else { timeStr = fmtDate(ev.date) + (ev.allDay ? '' : ' · ' + fmtTime(ev.date)); }
+  // Start of current week (Sunday)
+  const sunday = new Date(today);
+  sunday.setDate(today.getDate() - today.getDay());
 
-    return `<div class="cal-event">
-      <div class="cal-dot ${dotClass}"></div>
-      <div class="cal-info">
-        <div class="cal-title">${escHtml(ev.summary)}</div>
-        <div class="cal-time">${timeStr}</div>
-      </div>
+  const dayNames = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+
+  let html = '';
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(sunday);
+    day.setDate(sunday.getDate() + i);
+    const dayStr = day.toDateString();
+    const isToday = dayStr === today.toDateString();
+    const isTomorrow = dayStr === tomorrow.toDateString();
+
+    const dayEvents = events.filter(e => {
+      const ed = new Date(e.date);
+      ed.setHours(0,0,0,0);
+      return ed.toDateString() === dayStr;
+    });
+
+    let pillsHtml = '';
+    for (const ev of dayEvents) {
+      const cls = isToday ? 'today-ev' : isTomorrow ? 'tomorrow-ev' : 'other-ev';
+      const timeHtml = ev.allDay ? '' : `<span class="ev-time">${fmtTime(ev.date)}</span>`;
+      pillsHtml += `<div class="week-event ${cls}">${timeHtml}<span class="ev-title">${escHtml(ev.summary)}</span></div>`;
+    }
+
+    html += `<div class="week-day${isToday ? ' today' : ''}">
+      <div class="week-day-name">${dayNames[i]}</div>
+      <div class="week-day-num">${day.getDate()}</div>
+      <div class="week-events">${pillsHtml}</div>
     </div>`;
-  }).join('');
+  }
+
+  container.innerHTML = html;
 }
 
 function fmtTime(d) {
@@ -1058,6 +1164,7 @@ function checkDailyReset() {
     if (lastReset !== today) {
       localStorage.removeItem('pf-chores');
       localStorage.setItem('pf-chores-date', today);
+      _choresDoneNotified = false; // reset notification for new day
       buildChores();
     }
   } catch(e) {}
@@ -1085,6 +1192,7 @@ function buildChores() {
         else s[key] = true;
         saveChores(s);
         item.classList.toggle('done');
+        checkChoreCompletion();
       };
       colEl.appendChild(item);
     });
@@ -1102,6 +1210,67 @@ function buildChores() {
     colEl.appendChild(reset);
     panel.appendChild(colEl);
   });
+}
+
+// ── NOTIFICATIONS ─────────────────────────────────────────────
+async function requestNotificationPermission() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'default') {
+    await Notification.requestPermission();
+  }
+}
+
+function sendNotification(title, body) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  try {
+    new Notification(title, { body, icon: '/icon-192.png', silent: false });
+  } catch(e) {}
+}
+
+function checkAllChoresDone() {
+  const state = loadChores();
+  const def = getChoresDef();
+  for (const col of def) {
+    for (let ti = 0; ti < col.tasks.length; ti++) {
+      if (!state[`${col.id}-${ti}`]) return false;
+    }
+  }
+  return def.some(col => col.tasks.length > 0); // at least one chore must exist
+}
+
+function checkChoreCompletion() {
+  if (_choresDoneNotified) return;
+  if (checkAllChoresDone()) {
+    _choresDoneNotified = true;
+    sendNotification('✅ Chores done!', 'All chores have been completed. Great work!');
+  }
+}
+
+let _eveningReminderInterval = null;
+function startEveningReminder() {
+  if (_eveningReminderInterval) clearInterval(_eveningReminderInterval);
+  let _eveningFired = false;
+
+  _eveningReminderInterval = setInterval(() => {
+    const now = new Date();
+    const todayStr = now.toDateString();
+    const reminderKey = 'pf-reminder-date';
+    const lastFired = localStorage.getItem(reminderKey);
+
+    // Reset fired flag on new day
+    if (lastFired !== todayStr) _eveningFired = false;
+
+    if (_eveningFired) return;
+
+    const [rh, rm] = (cfg.choreReminder || '20:00').split(':').map(Number);
+    if (now.getHours() === rh && now.getMinutes() === rm) {
+      if (!checkAllChoresDone()) {
+        sendNotification('⚠️ Chores not done yet', 'Check with the kids — chores are still pending!');
+      }
+      _eveningFired = true;
+      try { localStorage.setItem(reminderKey, todayStr); } catch(e) {}
+    }
+  }, 30 * 1000); // check every 30 seconds
 }
 
 // ── INIT ─────────────────────────────────────────────────────
@@ -1145,6 +1314,15 @@ async function init() {
 
   // wake lock
   requestWakeLock();
+
+  // notifications
+  requestNotificationPermission();
+  startEveningReminder();
+
+  // service worker (for future background push support)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {/* SW optional */});
+  }
 }
 
 init();
