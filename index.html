@@ -366,6 +366,7 @@
 
   #ticker-track {
     display: flex;
+    padding-left: 100vw;
     align-items: center;
     white-space: nowrap;
     animation: ticker-scroll 40s linear infinite;
@@ -725,6 +726,14 @@
     <div class="setting-section">Ticker Messages</div>
     <textarea id="ticker-text" placeholder="One message per line…"></textarea>
 
+    <div class="setting-row">
+      <div class="setting-label">Notification Topic</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input id="ntfy-topic" type="text" readonly style="flex:1;font-size:13px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:6px 10px;color:inherit;font-family:monospace">
+        <button onclick="navigator.clipboard.writeText(document.getElementById('ntfy-topic').value)" style="font-size:12px;padding:4px 10px;border-radius:6px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:inherit;cursor:pointer">Copy</button>
+      </div>
+    </div>
+
     <button id="save-btn">Save Settings</button>
   </div>
 </div>
@@ -784,11 +793,23 @@ function loadCfg() {
     speed:          15,
     messages:       DEFAULT_MSGS.join('\n'),
     choreReminder:  '20:00',
+    ntfyTopic:      'parmar-chores-7749',
   };
 }
 
 function saveCfg() {
   try { localStorage.setItem('pf-cfg', JSON.stringify(cfg)); } catch(e) {}
+}
+
+async function sendNtfy(message) {
+  if (!cfg.ntfyTopic) return;
+  try {
+    await fetch('https://ntfy.sh/' + cfg.ntfyTopic, {
+      method: 'POST',
+      headers: { 'Title': 'Family Frame', 'Content-Type': 'text/plain' },
+      body: message
+    });
+  } catch(e) {}
 }
 
 // ── BUILD SLIDES ──────────────────────────────────────────────
@@ -940,6 +961,7 @@ function openSettings() {
     if (el) el.value = col.tasks.join('\n');
   });
   document.getElementById('settings-panel').classList.add('open');
+  document.getElementById('ntfy-topic').value = cfg.ntfyTopic || '';
 }
 
 function closeSettings() {
@@ -1243,6 +1265,7 @@ function checkChoreCompletion() {
   if (checkAllChoresDone()) {
     _choresDoneNotified = true;
     sendNotification('✅ Chores done!', 'All chores have been completed. Great work!');
+    sendNtfy('✅ Chores done!');
   }
 }
 
@@ -1266,6 +1289,7 @@ function startEveningReminder() {
     if (now.getHours() === rh && now.getMinutes() === rm) {
       if (!checkAllChoresDone()) {
         sendNotification('⚠️ Chores not done yet', 'Check with the kids — chores are still pending!');
+        sendNtfy('⚠️ Chores not done yet — check with the kids!');
       }
       _eveningFired = true;
       try { localStorage.setItem(reminderKey, todayStr); } catch(e) {}
