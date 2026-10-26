@@ -29,7 +29,7 @@
     user-select: none;
   }
 
-  /* Ã¢ÂÂÃ¢ÂÂ OVERLAY LAYER Ã¢ÂÂÃ¢ÂÂ */
+  /* OVERLAY LAYER */
   #overlay {
     position: fixed;
     inset: 0;
@@ -37,7 +37,7 @@
     pointer-events: none;
   }
 
-  /* Ã¢ÂÂÃ¢ÂÂ WEEK STRIP Ã¢ÂÂÃ¢ÂÂ */
+  /* WEEK STRIP */
   #week-strip {
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -151,8 +151,7 @@
     max-width: 100%;
   }
 
-  /* Ã¢ÂÂÃ¢ÂÂ TICKER Ã¢ÂÂÃ¢ÂÂ */
-  /* Ã¢ÂÂÃ¢ÂÂ CHORES PANEL Ã¢ÂÂÃ¢ÂÂ */
+  /* CHORES PANEL */
   #chores-panel {
     position: absolute;
     bottom: 88px; left: 36px;
@@ -207,7 +206,7 @@
     border-color: #34c759;
   }
 
-  .chore-item.done .chore-cb::after { content: 'Ã¢ÂÂ'; color: white; }
+  .chore-item.done .chore-cb::after { content: '\2713'; color: white; }
 
   .chore-item .chore-label {
     font-size: 12px;
@@ -237,6 +236,7 @@
   }
   .chore-reset:hover { color: rgba(255,255,255,0.5); }
 
+  /* TICKER */
   #ticker-wrap {
     position: absolute;
     bottom: 0; left: 0; right: 0;
@@ -279,7 +279,7 @@
     100% { transform: translateX(-100%); }
   }
 
-  /* Ã¢ÂÂÃ¢ÂÂ SETTINGS BUTTON Ã¢ÂÂÃ¢ÂÂ */
+  /* SETTINGS BUTTON */
   #settings-btn {
     position: absolute;
     bottom: 88px; right: 200px;
@@ -298,7 +298,7 @@
   }
   #settings-btn:hover { background: rgba(255,255,255,0.15); }
 
-  /* Ã¢ÂÂÃ¢ÂÂ SETTINGS PANEL Ã¢ÂÂÃ¢ÂÂ */
+  /* SETTINGS PANEL */
   #settings-panel {
     position: fixed;
     inset: 0;
@@ -448,17 +448,12 @@
     -webkit-backdrop-filter: blur(12px);
   }
   #save-btn:hover { background: rgba(255,255,255,0.25); }
-
-  </style>
+</style>
 </head>
 <body>
 
-
 <!-- Overlay -->
 <div id="overlay">
-  </div>
-
-  </div>
 
   <!-- Week Strip (full-width top bar) -->
   <div id="week-strip">
@@ -467,7 +462,6 @@
 
   <!-- Chores -->
   <div id="chores-panel"></div>
-
 
   <!-- Settings button -->
   <button id="settings-btn" title="Settings">&#9881;</button>
@@ -486,32 +480,11 @@
     <div class="setting-section">Display</div>
 
     <div class="setting-row">
-      <div class="setting-label">Show Clock<small>Time and date overlay</small></div>
-      <label class="toggle">
-        <span class="toggle-track"></span>
-      </label>
-    </div>
-
-    <div class="setting-row">
-      <div class="setting-label">Show Weather<small>Vancouver, BC</small></div>
-      <label class="toggle">
-        <span class="toggle-track"></span>
-      </label>
-    </div>
-
-    <div class="setting-row">
       <div class="setting-label">Show Ticker<small>Scrolling messages</small></div>
       <label class="toggle">
         <input type="checkbox" id="tog-ticker" checked>
         <span class="toggle-track"></span>
       </label>
-    </div>
-
-    <div class="setting-section">Slideshow</div>
-
-    <div class="setting-row">
-      <div class="setting-label">Photo duration<small id="speed-val">15 seconds</small></div>
-      <input type="range" id="slide-speed" min="5" max="60" value="15" step="1">
     </div>
 
     <div class="setting-section">Google Calendar</div>
@@ -523,31 +496,31 @@
       </label>
     </div>
     <div style="margin-bottom:16px">
-      <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">iCal URL <span style="opacity:0.5">(Google Calendar Ã¢ÂÂ Settings Ã¢ÂÂ Secret address in iCal format)</span></div>
-      <input type="text" id="cal-url" placeholder="webcal://calendar.google.com/calendar/ical/Ã¢ÂÂ¦"
+      <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">iCal URL <span style="opacity:0.5">(Google Calendar &rarr; Settings &rarr; Secret address in iCal format)</span></div>
+      <input type="text" id="cal-url" placeholder="webcal://calendar.google.com/calendar/ical/&hellip;"
         style="width:100%;background:rgba(255,255,255,0.08);border:1px solid var(--glass-border);border-radius:10px;color:var(--text);font-family:inherit;font-size:12px;padding:8px 12px;outline:none">
     </div>
 
-    <div class="setting-section">Chores Ã¢ÂÂ S</div>
-    <textarea id="chores-S" placeholder="One task per lineÃ¢ÂÂ¦" rows="3"></textarea>
+    <div class="setting-section">Chores &mdash; S</div>
+    <textarea id="chores-S" placeholder="One task per line&hellip;" rows="3"></textarea>
 
-    <div class="setting-section">Chores Ã¢ÂÂ N</div>
-    <textarea id="chores-N" placeholder="One task per lineÃ¢ÂÂ¦" rows="4"></textarea>
+    <div class="setting-section">Chores &mdash; N</div>
+    <textarea id="chores-N" placeholder="One task per line&hellip;" rows="4"></textarea>
 
-    <div class="setting-section">Chores Ã¢ÂÂ Z</div>
-    <textarea id="chores-Z" placeholder="One task per lineÃ¢ÂÂ¦" rows="5"></textarea>
+    <div class="setting-section">Chores &mdash; Z</div>
+    <textarea id="chores-Z" placeholder="One task per line&hellip;" rows="5"></textarea>
 
     <div class="setting-section">Chore Reminder Time</div>
     <div style="display:flex;align-items:center;gap:10px">
       <input type="time" id="chore-reminder" value="20:00"
         style="background:rgba(255,255,255,0.08);border:1px solid var(--glass-border);border-radius:10px;color:var(--text);font-family:inherit;font-size:14px;padding:8px 12px;outline:none">
-      <span style="font-size:12px;color:var(--text-dim)">Evening reminder if chores aren't done</span>
+      <span style="font-size:12px;color:var(--text-dim)">Evening reminder if chores aren&rsquo;t done</span>
     </div>
 
     <div class="setting-section">Ticker Messages</div>
-    <textarea id="ticker-text" placeholder="One message per lineÃ¢ÂÂ¦"></textarea>
+    <textarea id="ticker-text" placeholder="One message per line&hellip;"></textarea>
 
-    <div class="setting-row">
+    <div class="setting-row" style="margin-top:20px">
       <div class="setting-label">Notification Topic</div>
       <div style="display:flex;gap:8px;align-items:center">
         <input id="ntfy-topic" type="text" readonly style="flex:1;font-size:13px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:6px 10px;color:inherit;font-family:monospace">
@@ -560,36 +533,34 @@
 </div>
 
 <script>
-// DEFAULT TICKER MESSAGES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// DEFAULT TICKER MESSAGES
 const DEFAULT_MSGS = [
-  "Ã°ÂÂÂ Homework before screens",
-  "Ã°ÂÂÂ¹ Piano practice: 45 min",
-  "Ã°ÂÂÂ» Violin: 15 min",
-  "Ã°ÂÂÂº Trumpet: 15 min",
-  "Ã°ÂÂ§Â¹ Vacuum your room today",
-  "Ã°ÂÂÂ Neeman Ã¢ÂÂ sprinting practice",
-  "Ã°ÂÂÂ Grocery run today",
-  "Ã°ÂÂÂ Have a great day!",
-  "Ã°ÂÂÂ Lights out by 9:30 PM",
-  "Ã°ÂÂ¥Â Eat your greens",
+  "\u{1F4DA} Homework before screens",
+  "\u{1F3B9} Piano practice: 45 min",
+  "\u{1F3BB} Violin: 15 min",
+  "\u{1F3BA} Trumpet: 15 min",
+  "\u{1F9F9} Vacuum your room today",
+  "\u{1F3C3} Neeman — sprinting practice",
+  "\u{1F6D2} Grocery run today",
+  "\u{1F499} Have a great day!",
+  "\u{1F319} Lights out by 9:30 PM",
+  "\u{1F957} Eat your greens",
 ];
 
-// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ STATE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// STATE
 let cfg = loadCfg();
 let slideInterval;
 let wakelock = null;
-let calEvents = []; // today's parsed calendar events for ticker
+let calEvents = [];
 let _choresDoneNotified = false;
 
-// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ CONFIG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// CONFIG
 function loadCfg() {
   try {
     const s = localStorage.getItem('pf-cfg');
     if (s) return JSON.parse(s);
   } catch(e) {}
   return {
-    showClock:      true,
-    showWeather:    true,
     showTicker:     true,
     showCalendar:   false,
     calUrl:         '',
@@ -615,7 +586,7 @@ async function sendNtfy(message) {
   } catch(e) {}
 }
 
-// TICKER Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// TICKER
 function buildTicker() {
   const customMsgs = cfg.messages.split('\n').map(m=>m.trim()).filter(Boolean);
 
@@ -629,8 +600,8 @@ function buildTicker() {
       return d.toDateString() === today.toDateString();
     })
     .map(e => e.allDay
-      ? `Ã°ÂÂÂ Today: ${e.summary}`
-      : `Ã°ÂÂÂ ${fmtTime(e.date)} Ã¢ÂÂ ${e.summary}`);
+      ? "\u{1F4C5} Today: " + e.summary
+      : "\u{1F550} " + fmtTime(e.date) + " — " + e.summary);
 
   const allMsgs = [...todayItems, ...customMsgs];
   if (!allMsgs.length) return;
@@ -638,25 +609,24 @@ function buildTicker() {
   // duplicate for seamless loop
   const items = [...allMsgs, ...allMsgs];
   track.innerHTML = items.map(m =>
-    `<span>${m}</span><span class="dot">ÃÂ·</span>`
+    '<span>' + m + '</span><span class="dot">&middot;</span>'
   ).join('');
 }
 
-// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ VISIBILITY Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// VISIBILITY
 function applyVisibility() {
-  document.getElementById('ticker-wrap').style.display   = cfg.showTicker   ? '' : 'none';
-  if (!cfg.showCalendar) document.getElementById('week-strip').style.display = 'none';
+  document.getElementById('ticker-wrap').style.display = cfg.showTicker ? '' : 'none';
+  // Week strip always visible (shows empty days when no cal URL configured)
 }
 
-// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ SETTINGS UI Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// SETTINGS UI
 function openSettings() {
   document.getElementById('tog-ticker').checked  = cfg.showTicker;
-  document.getElementById('slide-speed').value   = cfg.speed;
-  document.getElementById('speed-val').textContent = `${cfg.speed} seconds`;
-  document.getElementById('ticker-text').value      = cfg.messages;
-  document.getElementById('tog-calendar').checked   = cfg.showCalendar;
-  document.getElementById('cal-url').value          = cfg.calUrl || '';
-  document.getElementById('chore-reminder').value   = cfg.choreReminder || '20:00';
+  document.getElementById('ticker-text').value   = cfg.messages;
+  document.getElementById('tog-calendar').checked = cfg.showCalendar;
+  document.getElementById('cal-url').value        = cfg.calUrl || '';
+  document.getElementById('chore-reminder').value = cfg.choreReminder || '20:00';
+  document.getElementById('ntfy-topic').value     = cfg.ntfyTopic || '';
   // populate chore editors
   const def = getChoresDef();
   def.forEach(col => {
@@ -664,7 +634,6 @@ function openSettings() {
     if (el) el.value = col.tasks.join('\n');
   });
   document.getElementById('settings-panel').classList.add('open');
-  document.getElementById('ntfy-topic').value = cfg.ntfyTopic || '';
 }
 
 function closeSettings() {
@@ -677,15 +646,10 @@ document.getElementById('settings-panel').onclick = e => {
   if (e.target === document.getElementById('settings-panel')) closeSettings();
 };
 
-document.getElementById('slide-speed').oninput = function() {
-  document.getElementById('speed-val').textContent = `${this.value} seconds`;
-};
-
 document.getElementById('save-btn').onclick = () => {
   cfg.showTicker   = document.getElementById('tog-ticker').checked;
   cfg.showCalendar = document.getElementById('tog-calendar').checked;
   cfg.calUrl       = document.getElementById('cal-url').value.trim();
-  cfg.speed        = parseInt(document.getElementById('slide-speed').value);
   cfg.messages      = document.getElementById('ticker-text').value;
   cfg.choreReminder = document.getElementById('chore-reminder').value || '20:00';
   saveCfg();
@@ -703,42 +667,45 @@ document.getElementById('save-btn').onclick = () => {
   applyVisibility();
   buildTicker();
   buildChores();
+  fetchCalendar();
   closeSettings();
 };
 
-// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ WAKE LOCK Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// WAKE LOCK
 async function requestWakeLock() {
   try {
     if ('wakeLock' in navigator) {
       wakelock = await navigator.wakeLock.request('screen');
     }
-  } catch(e) { /* silently ignore */ }
+  } catch(e) {}
 }
 
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') requestWakeLock();
 });
 
-// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ CALENDAR / WEEK STRIP Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// CALENDAR / WEEK STRIP
 async function fetchCalendar() {
   const url = cfg.calUrl;
   const strip = document.getElementById('week-strip');
-  if (!cfg.showCalendar || !url) { strip.style.display = 'none'; return; }
-  strip.style.display = '';
+  strip.style.display = ''; // always show
+
+  if (!url) {
+    renderWeekStrip([]); // show empty week grid
+    return;
+  }
 
   try {
-    // Use same-origin Cloudflare Pages Function proxy (functions/ical-proxy.js)
     const cleanUrl = url.replace('webcal://', 'https://');
     const r = await fetch('/ical-proxy?url=' + encodeURIComponent(cleanUrl), { signal: AbortSignal.timeout(15000) });
     const ical = await r.text();
     if (!ical.includes('BEGIN:VCALENDAR')) throw new Error('invalid response');
     const events = parseICal(ical);
-    calEvents = events; // expose for ticker
+    calEvents = events;
     renderWeekStrip(events);
-    buildTicker(); // refresh ticker with today's events
+    buildTicker();
   } catch(e) {
-    document.getElementById('week-days').innerHTML =
-      '<div style="color:var(--text-dim);font-size:12px;padding:8px;">Couldn\'t load calendar</div>';
+    renderWeekStrip([]);
   }
 }
 
@@ -746,13 +713,12 @@ function parseICal(text) {
   const events = [];
   const blocks = text.split('BEGIN:VEVENT');
 
-  // Current week bounds: Sunday 00:00 Ã¢ÂÂ Saturday 23:59:59
   const now = new Date();
   const startOfWeek = new Date(now);
   startOfWeek.setHours(0,0,0,0);
-  startOfWeek.setDate(now.getDate() - now.getDay()); // back to Sunday
+  startOfWeek.setDate(now.getDate() - now.getDay());
   const endOfWeek = new Date(startOfWeek);
-  endOfWeek.setDate(startOfWeek.getDate() + 7); // next Sunday (exclusive)
+  endOfWeek.setDate(startOfWeek.getDate() + 7);
 
   for (let i = 1; i < blocks.length; i++) {
     const block = blocks[i];
@@ -764,7 +730,6 @@ function parseICal(text) {
     let dtstart = get('DTSTART') || '';
     let allDay = false;
 
-    // parse date
     let date;
     if (dtstart.match(/^\d{8}$/)) {
       allDay = true;
@@ -778,7 +743,6 @@ function parseICal(text) {
       if (dtstart.endsWith('Z')) date = new Date(date.getTime() - date.getTimezoneOffset()*60000);
     } else { continue; }
 
-    // Filter to current week only
     if (date < startOfWeek || date >= endOfWeek) continue;
 
     events.push({ summary: summary.replace(/\\,/g,',').replace(/\\n/g,' '), date, allDay });
@@ -794,7 +758,6 @@ function renderWeekStrip(events) {
   today.setHours(0,0,0,0);
   const tomorrow = new Date(today.getTime() + 86400000);
 
-  // Start of current week (Sunday)
   const sunday = new Date(today);
   sunday.setDate(today.getDate() - today.getDay());
 
@@ -817,15 +780,15 @@ function renderWeekStrip(events) {
     let pillsHtml = '';
     for (const ev of dayEvents) {
       const cls = isToday ? 'today-ev' : isTomorrow ? 'tomorrow-ev' : 'other-ev';
-      const timeHtml = ev.allDay ? '' : `<span class="ev-time">${fmtTime(ev.date)}</span>`;
-      pillsHtml += `<div class="week-event ${cls}">${timeHtml}<span class="ev-title">${escHtml(ev.summary)}</span></div>`;
+      const timeHtml = ev.allDay ? '' : '<span class="ev-time">' + fmtTime(ev.date) + '</span>';
+      pillsHtml += '<div class="week-event ' + cls + '">' + timeHtml + '<span class="ev-title">' + escHtml(ev.summary) + '</span></div>';
     }
 
-    html += `<div class="week-day${isToday ? ' today' : ''}">
-      <div class="week-day-name">${dayNames[i]}</div>
-      <div class="week-day-num">${day.getDate()}</div>
-      <div class="week-events">${pillsHtml}</div>
-    </div>`;
+    html += '<div class="week-day' + (isToday ? ' today' : '') + '">' +
+      '<div class="week-day-name">' + dayNames[i] + '</div>' +
+      '<div class="week-day-num">' + day.getDate() + '</div>' +
+      '<div class="week-events">' + pillsHtml + '</div>' +
+      '</div>';
   }
 
   container.innerHTML = html;
@@ -834,20 +797,14 @@ function renderWeekStrip(events) {
 function fmtTime(d) {
   const h = d.getHours(), m = d.getMinutes();
   const ampm = h >= 12 ? 'PM' : 'AM';
-  return `${h % 12 || 12}:${String(m).padStart(2,'0')} ${ampm}`;
-}
-
-function fmtDate(d) {
-  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return `${days[d.getDay()]} ${months[d.getMonth()]} ${d.getDate()}`;
+  return (h % 12 || 12) + ':' + String(m).padStart(2,'0') + ' ' + ampm;
 }
 
 function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ CHORES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// CHORES
 const CHORES_DEFAULT = [
   { id: 'S', label: 'S', tasks: ['Vacuum', 'Exercise'] },
   { id: 'N', label: 'N', tasks: ['Vacuum', 'Homework', 'Sprinting'] },
@@ -878,7 +835,6 @@ function saveChores(state) {
   try { localStorage.setItem('pf-chores', JSON.stringify(state)); } catch(e) {}
 }
 
-// Reset chores at midnight
 function checkDailyReset() {
   try {
     const lastReset = localStorage.getItem('pf-chores-date');
@@ -886,7 +842,7 @@ function checkDailyReset() {
     if (lastReset !== today) {
       localStorage.removeItem('pf-chores');
       localStorage.setItem('pf-chores-date', today);
-      _choresDoneNotified = false; // reset notification for new day
+      _choresDoneNotified = false;
       buildChores();
     }
   } catch(e) {}
@@ -900,14 +856,14 @@ function buildChores() {
   getChoresDef().forEach(col => {
     const colEl = document.createElement('div');
     colEl.className = 'chore-col';
-    colEl.innerHTML = `<h3>${col.label}</h3>`;
+    colEl.innerHTML = '<h3>' + col.label + '</h3>';
 
     col.tasks.forEach((task, ti) => {
-      const key = `${col.id}-${ti}`;
+      const key = col.id + '-' + ti;
       const done = !!state[key];
       const item = document.createElement('div');
       item.className = 'chore-item' + (done ? ' done' : '');
-      item.innerHTML = `<div class="chore-cb"></div><div class="chore-label">${task}</div>`;
+      item.innerHTML = '<div class="chore-cb"></div><div class="chore-label">' + task + '</div>';
       item.onclick = () => {
         const s = loadChores();
         if (s[key]) delete s[key];
@@ -925,7 +881,7 @@ function buildChores() {
     reset.onclick = e => {
       e.stopPropagation();
       const s = loadChores();
-      col.tasks.forEach((_, ti) => delete s[`${col.id}-${ti}`]);
+      col.tasks.forEach((_, ti) => delete s[col.id + '-' + ti]);
       saveChores(s);
       buildChores();
     };
@@ -934,7 +890,7 @@ function buildChores() {
   });
 }
 
-// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ NOTIFICATIONS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// NOTIFICATIONS
 async function requestNotificationPermission() {
   if (!('Notification' in window)) return;
   if (Notification.permission === 'default') {
@@ -954,18 +910,18 @@ function checkAllChoresDone() {
   const def = getChoresDef();
   for (const col of def) {
     for (let ti = 0; ti < col.tasks.length; ti++) {
-      if (!state[`${col.id}-${ti}`]) return false;
+      if (!state[col.id + '-' + ti]) return false;
     }
   }
-  return def.some(col => col.tasks.length > 0); // at least one chore must exist
+  return def.some(col => col.tasks.length > 0);
 }
 
 function checkChoreCompletion() {
   if (_choresDoneNotified) return;
   if (checkAllChoresDone()) {
     _choresDoneNotified = true;
-    sendNotification('Ã¢ÂÂ Chores done!', 'All chores have been completed. Great work!');
-    sendNtfy('Ã¢ÂÂ Chores done!');
+    sendNotification('✅ Chores done!', 'All chores have been completed. Great work!');
+    sendNtfy('✅ Chores done!');
   }
 }
 
@@ -980,24 +936,24 @@ function startEveningReminder() {
     const reminderKey = 'pf-reminder-date';
     const lastFired = localStorage.getItem(reminderKey);
 
-    // Reset fired flag on new day
     if (lastFired !== todayStr) _eveningFired = false;
 
     if (_eveningFired) return;
 
-    const [rh, rm] = (cfg.choreReminder || '20:00').split(':').map(Number);
+    const parts = (cfg.choreReminder || '20:00').split(':').map(Number);
+    const rh = parts[0], rm = parts[1];
     if (now.getHours() === rh && now.getMinutes() === rm) {
       if (!checkAllChoresDone()) {
-        sendNotification('Ã¢ÂÂ Ã¯Â¸Â Chores not done yet', 'Check with the kids Ã¢ÂÂ chores are still pending!');
-        sendNtfy('Ã¢ÂÂ Ã¯Â¸Â Chores not done yet Ã¢ÂÂ check with the kids!');
+        sendNotification('⚠️ Chores not done yet', 'Check with the kids — chores are still pending!');
+        sendNtfy('⚠️ Chores not done yet — check with the kids!');
       }
       _eveningFired = true;
       try { localStorage.setItem(reminderKey, todayStr); } catch(e) {}
     }
-  }, 30 * 1000); // check every 30 seconds
+  }, 30 * 1000);
 }
 
-// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ INIT Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// INIT
 async function init() {
   applyVisibility();
   buildTicker();
@@ -1005,22 +961,13 @@ async function init() {
   fetchCalendar();
   checkDailyReset();
   setInterval(checkDailyReset, 60 * 1000);
-
-  // clock tick every second
-
-  // calendar refresh every 15 min
   setInterval(fetchCalendar, 15 * 60 * 1000);
-
-  // wake lock
   requestWakeLock();
-
-  // notifications
   requestNotificationPermission();
   startEveningReminder();
 
-  // service worker (for future background push support)
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').catch(() => {/* SW optional */});
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
   }
 }
 
