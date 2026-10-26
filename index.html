@@ -29,7 +29,7 @@
     user-select: none;
   }
 
-  /* ââ OVERLAY LAYER ââ */
+  /* Ã¢ÂÂÃ¢ÂÂ OVERLAY LAYER Ã¢ÂÂÃ¢ÂÂ */
   #overlay {
     position: fixed;
     inset: 0;
@@ -37,7 +37,7 @@
     pointer-events: none;
   }
 
-  /* ââ WEEK STRIP ââ */
+  /* Ã¢ÂÂÃ¢ÂÂ WEEK STRIP Ã¢ÂÂÃ¢ÂÂ */
   #week-strip {
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -151,8 +151,8 @@
     max-width: 100%;
   }
 
-  /* ââ TICKER ââ */
-  /* ââ CHORES PANEL ââ */
+  /* Ã¢ÂÂÃ¢ÂÂ TICKER Ã¢ÂÂÃ¢ÂÂ */
+  /* Ã¢ÂÂÃ¢ÂÂ CHORES PANEL Ã¢ÂÂÃ¢ÂÂ */
   #chores-panel {
     position: absolute;
     bottom: 88px; left: 36px;
@@ -207,7 +207,7 @@
     border-color: #34c759;
   }
 
-  .chore-item.done .chore-cb::after { content: 'â'; color: white; }
+  .chore-item.done .chore-cb::after { content: 'Ã¢ÂÂ'; color: white; }
 
   .chore-item .chore-label {
     font-size: 12px;
@@ -279,7 +279,7 @@
     100% { transform: translateX(-100%); }
   }
 
-  /* ââ SETTINGS BUTTON ââ */
+  /* Ã¢ÂÂÃ¢ÂÂ SETTINGS BUTTON Ã¢ÂÂÃ¢ÂÂ */
   #settings-btn {
     position: absolute;
     bottom: 88px; right: 200px;
@@ -298,7 +298,7 @@
   }
   #settings-btn:hover { background: rgba(255,255,255,0.15); }
 
-  /* ââ SETTINGS PANEL ââ */
+  /* Ã¢ÂÂÃ¢ÂÂ SETTINGS PANEL Ã¢ÂÂÃ¢ÂÂ */
   #settings-panel {
     position: fixed;
     inset: 0;
@@ -523,19 +523,19 @@
       </label>
     </div>
     <div style="margin-bottom:16px">
-      <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">iCal URL <span style="opacity:0.5">(Google Calendar â Settings â Secret address in iCal format)</span></div>
-      <input type="text" id="cal-url" placeholder="webcal://calendar.google.com/calendar/ical/â¦"
+      <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">iCal URL <span style="opacity:0.5">(Google Calendar Ã¢ÂÂ Settings Ã¢ÂÂ Secret address in iCal format)</span></div>
+      <input type="text" id="cal-url" placeholder="webcal://calendar.google.com/calendar/ical/Ã¢ÂÂ¦"
         style="width:100%;background:rgba(255,255,255,0.08);border:1px solid var(--glass-border);border-radius:10px;color:var(--text);font-family:inherit;font-size:12px;padding:8px 12px;outline:none">
     </div>
 
-    <div class="setting-section">Chores â S</div>
-    <textarea id="chores-S" placeholder="One task per lineâ¦" rows="3"></textarea>
+    <div class="setting-section">Chores Ã¢ÂÂ S</div>
+    <textarea id="chores-S" placeholder="One task per lineÃ¢ÂÂ¦" rows="3"></textarea>
 
-    <div class="setting-section">Chores â N</div>
-    <textarea id="chores-N" placeholder="One task per lineâ¦" rows="4"></textarea>
+    <div class="setting-section">Chores Ã¢ÂÂ N</div>
+    <textarea id="chores-N" placeholder="One task per lineÃ¢ÂÂ¦" rows="4"></textarea>
 
-    <div class="setting-section">Chores â Z</div>
-    <textarea id="chores-Z" placeholder="One task per lineâ¦" rows="5"></textarea>
+    <div class="setting-section">Chores Ã¢ÂÂ Z</div>
+    <textarea id="chores-Z" placeholder="One task per lineÃ¢ÂÂ¦" rows="5"></textarea>
 
     <div class="setting-section">Chore Reminder Time</div>
     <div style="display:flex;align-items:center;gap:10px">
@@ -545,7 +545,7 @@
     </div>
 
     <div class="setting-section">Ticker Messages</div>
-    <textarea id="ticker-text" placeholder="One message per lineâ¦"></textarea>
+    <textarea id="ticker-text" placeholder="One message per lineÃ¢ÂÂ¦"></textarea>
 
     <div class="setting-row">
       <div class="setting-label">Notification Topic</div>
@@ -560,28 +560,28 @@
 </div>
 
 <script>
-DEFAULT TICKER MESSAGES âââââââââââââââââââââââââââââââââââ
+// DEFAULT TICKER MESSAGES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const DEFAULT_MSGS = [
-  "ð Homework before screens",
-  "ð¹ Piano practice: 45 min",
-  "ð» Violin: 15 min",
-  "ðº Trumpet: 15 min",
-  "ð§¹ Vacuum your room today",
-  "ð Neeman â sprinting practice",
-  "ð Grocery run today",
-  "ð Have a great day!",
-  "ð Lights out by 9:30 PM",
-  "ð¥ Eat your greens",
+  "Ã°ÂÂÂ Homework before screens",
+  "Ã°ÂÂÂ¹ Piano practice: 45 min",
+  "Ã°ÂÂÂ» Violin: 15 min",
+  "Ã°ÂÂÂº Trumpet: 15 min",
+  "Ã°ÂÂ§Â¹ Vacuum your room today",
+  "Ã°ÂÂÂ Neeman Ã¢ÂÂ sprinting practice",
+  "Ã°ÂÂÂ Grocery run today",
+  "Ã°ÂÂÂ Have a great day!",
+  "Ã°ÂÂÂ Lights out by 9:30 PM",
+  "Ã°ÂÂ¥Â Eat your greens",
 ];
 
-// ──  ────────────────────────────────────────────── STATE ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ STATE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 let cfg = loadCfg();
 let slideInterval;
 let wakelock = null;
 let calEvents = []; // today's parsed calendar events for ticker
 let _choresDoneNotified = false;
 
-// ──  ────────────────────────────────────────────── CONFIG ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ CONFIG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function loadCfg() {
   try {
     const s = localStorage.getItem('pf-cfg');
@@ -615,7 +615,7 @@ async function sendNtfy(message) {
   } catch(e) {}
 }
 
-TICKER âââââââââââââââââââââââââââââââââââââââââââââââââââ
+// TICKER Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function buildTicker() {
   const customMsgs = cfg.messages.split('\n').map(m=>m.trim()).filter(Boolean);
 
@@ -629,8 +629,8 @@ function buildTicker() {
       return d.toDateString() === today.toDateString();
     })
     .map(e => e.allDay
-      ? `ð Today: ${e.summary}`
-      : `ð ${fmtTime(e.date)} â ${e.summary}`);
+      ? `Ã°ÂÂÂ Today: ${e.summary}`
+      : `Ã°ÂÂÂ ${fmtTime(e.date)} Ã¢ÂÂ ${e.summary}`);
 
   const allMsgs = [...todayItems, ...customMsgs];
   if (!allMsgs.length) return;
@@ -638,17 +638,17 @@ function buildTicker() {
   // duplicate for seamless loop
   const items = [...allMsgs, ...allMsgs];
   track.innerHTML = items.map(m =>
-    `<span>${m}</span><span class="dot">Â·</span>`
+    `<span>${m}</span><span class="dot">ÃÂ·</span>`
   ).join('');
 }
 
-// ──  ────────────────────────────────────────────── VISIBILITY âââââââââââââââââââââââââââââââââââââââââââââââ
+// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ VISIBILITY Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function applyVisibility() {
   document.getElementById('ticker-wrap').style.display   = cfg.showTicker   ? '' : 'none';
   if (!cfg.showCalendar) document.getElementById('week-strip').style.display = 'none';
 }
 
-// ──  ────────────────────────────────────────────── SETTINGS UI âââââââââââââââââââââââââââââââââââââââââââââââ
+// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ SETTINGS UI Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function openSettings() {
   document.getElementById('tog-ticker').checked  = cfg.showTicker;
   document.getElementById('slide-speed').value   = cfg.speed;
@@ -706,7 +706,7 @@ document.getElementById('save-btn').onclick = () => {
   closeSettings();
 };
 
-// ──  ────────────────────────────────────────────── WAKE LOCK ââââââââââââââââââââââââââââââââââââââââââââââââ
+// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ WAKE LOCK Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 async function requestWakeLock() {
   try {
     if ('wakeLock' in navigator) {
@@ -719,7 +719,7 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') requestWakeLock();
 });
 
-// ──  ────────────────────────────────────────────── CALENDAR / WEEK STRIP ââââââââââââââââââââââââââââââââââââ
+// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ CALENDAR / WEEK STRIP Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 async function fetchCalendar() {
   const url = cfg.calUrl;
   const strip = document.getElementById('week-strip');
@@ -746,7 +746,7 @@ function parseICal(text) {
   const events = [];
   const blocks = text.split('BEGIN:VEVENT');
 
-  // Current week bounds: Sunday 00:00 â Saturday 23:59:59
+  // Current week bounds: Sunday 00:00 Ã¢ÂÂ Saturday 23:59:59
   const now = new Date();
   const startOfWeek = new Date(now);
   startOfWeek.setHours(0,0,0,0);
@@ -847,7 +847,7 @@ function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-// ──  ────────────────────────────────────────────── CHORES âââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ CHORES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const CHORES_DEFAULT = [
   { id: 'S', label: 'S', tasks: ['Vacuum', 'Exercise'] },
   { id: 'N', label: 'N', tasks: ['Vacuum', 'Homework', 'Sprinting'] },
@@ -934,7 +934,7 @@ function buildChores() {
   });
 }
 
-// ──  ────────────────────────────────────────────── NOTIFICATIONS âââââââââââââââââââââââââââââââââââââââââââââ
+// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ NOTIFICATIONS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 async function requestNotificationPermission() {
   if (!('Notification' in window)) return;
   if (Notification.permission === 'default') {
@@ -964,8 +964,8 @@ function checkChoreCompletion() {
   if (_choresDoneNotified) return;
   if (checkAllChoresDone()) {
     _choresDoneNotified = true;
-    sendNotification('â Chores done!', 'All chores have been completed. Great work!');
-    sendNtfy('â Chores done!');
+    sendNotification('Ã¢ÂÂ Chores done!', 'All chores have been completed. Great work!');
+    sendNtfy('Ã¢ÂÂ Chores done!');
   }
 }
 
@@ -988,8 +988,8 @@ function startEveningReminder() {
     const [rh, rm] = (cfg.choreReminder || '20:00').split(':').map(Number);
     if (now.getHours() === rh && now.getMinutes() === rm) {
       if (!checkAllChoresDone()) {
-        sendNotification('â ï¸ Chores not done yet', 'Check with the kids â chores are still pending!');
-        sendNtfy('â ï¸ Chores not done yet â check with the kids!');
+        sendNotification('Ã¢ÂÂ Ã¯Â¸Â Chores not done yet', 'Check with the kids Ã¢ÂÂ chores are still pending!');
+        sendNtfy('Ã¢ÂÂ Ã¯Â¸Â Chores not done yet Ã¢ÂÂ check with the kids!');
       }
       _eveningFired = true;
       try { localStorage.setItem(reminderKey, todayStr); } catch(e) {}
@@ -997,7 +997,7 @@ function startEveningReminder() {
   }, 30 * 1000); // check every 30 seconds
 }
 
-// ──  ────────────────────────────────────────────── INIT âââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ââ  ââââââââââââââââââââââââââââââââââââââââââââââ INIT Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 async function init() {
   applyVisibility();
   buildTicker();
