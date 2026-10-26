@@ -22,49 +22,11 @@
   html, body {
     width: 100%; height: 100%;
     overflow: hidden;
-    background: #000;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     user-select: none;
-  }
-
-  /* ââ SLIDESHOW ââ */
-  #slideshow {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-  }
-
-  .slide {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 1.8s ease-in-out;
-    animation: kenburns 20s ease-in-out infinite alternate;
-  }
-
-  .slide.active { opacity: 1; }
-  .slide.prev   { opacity: 0; }
-
-  @keyframes kenburns {
-    0%   { transform: scale(1.0)   translate(0%,   0%);   }
-    25%  { transform: scale(1.05)  translate(-1%,  -0.5%); }
-    50%  { transform: scale(1.08)  translate(1%,   1%);   }
-    75%  { transform: scale(1.05)  translate(-0.5%,1%);   }
-    100% { transform: scale(1.0)   translate(0.5%, -1%);  }
-  }
-
-  /* vignette */
-  #slideshow::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55) 100%);
-    pointer-events: none;
-    z-index: 1;
   }
 
   /* ââ OVERLAY LAYER ââ */
@@ -75,81 +37,6 @@
     pointer-events: none;
   }
 
-  /* ââ CLOCK / DATE ââ */
-  #clock-panel {
-    position: absolute;
-    top: 12px; left: 16px;
-    pointer-events: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    z-index: 12;
-  }
-
-  #clock-time {
-    font-size: clamp(32px, 4vw, 48px);
-    font-weight: 200;
-    letter-spacing: -1px;
-    color: var(--text);
-    line-height: 1;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.8);
-  }
-
-  #clock-date {
-    font-size: clamp(11px, 1.4vw, 15px);
-    font-weight: 300;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.8);
-  }
-
-  /* ââ WEATHER (bottom right, above ticker) ââ */
-  #weather-panel {
-    position: absolute;
-    bottom: 56px; right: 36px;
-    background: var(--glass);
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 14px 20px;
-    pointer-events: auto;
-    text-align: right;
-    min-width: 160px;
-  }
-
-  #weather-temp {
-    font-size: clamp(30px, 4vw, 44px);
-    font-weight: 200;
-    color: var(--text);
-    line-height: 1;
-  }
-
-  #weather-icon {
-    font-size: 30px;
-    display: block;
-    margin-bottom: 2px;
-  }
-
-  #weather-desc {
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-top: 4px;
-  }
-
-  #weather-feels {
-    font-size: 11px;
-    color: var(--text-dim);
-  }
-
-  #weather-city {
-    font-size: 10px;
-    color: rgba(255,255,255,0.35);
-    margin-top: 4px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
   /* ââ WEEK STRIP ââ */
   #week-strip {
     position: absolute;
@@ -158,7 +45,7 @@
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
     border-bottom: 1px solid var(--glass-border);
-    padding: 10px 12px 10px 160px; /* left gap for clock */
+    padding: 24px 20px 20px;
     pointer-events: auto;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -174,11 +61,11 @@
 
   .week-day {
     flex: 1;
-    min-width: 90px;
+    min-width: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 6px 6px 8px;
+    padding: 20px 10px 16px;
     border-radius: 12px;
     transition: background 0.2s;
   }
@@ -189,7 +76,7 @@
   }
 
   .week-day-name {
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 1.2px;
     color: rgba(255,255,255,0.4);
@@ -202,7 +89,7 @@
   }
 
   .week-day-num {
-    font-size: 20px;
+    font-size: 38px;
     font-weight: 200;
     color: var(--text);
     line-height: 1.1;
@@ -217,15 +104,15 @@
   .week-events {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 6px;
     width: 100%;
     align-items: stretch;
   }
 
   .week-event {
     border-radius: 5px;
-    padding: 2px 5px;
-    font-size: 10px;
+    padding: 5px 8px;
+    font-size: 13px;
     line-height: 1.35;
     overflow: hidden;
     display: flex;
@@ -268,7 +155,7 @@
   /* ââ CHORES PANEL ââ */
   #chores-panel {
     position: absolute;
-    bottom: 56px; left: 36px;
+    bottom: 88px; left: 36px;
     display: flex;
     gap: 10px;
     pointer-events: auto;
@@ -324,7 +211,7 @@
 
   .chore-item .chore-label {
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--text);
     line-height: 1.3;
     transition: opacity 0.2s;
@@ -357,7 +244,7 @@
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
     border-top: 1px solid var(--glass-border);
-    height: 48px;
+    height: 80px;
     overflow: hidden;
     pointer-events: auto;
     display: flex;
@@ -375,7 +262,7 @@
   #ticker-track span {
     display: inline-block;
     color: var(--text);
-    font-size: 15px;
+    font-size: 22px;
     font-weight: 300;
     padding: 0 48px;
     opacity: 0.85;
@@ -392,31 +279,10 @@
     100% { transform: translateX(-100%); }
   }
 
-  /* ââ PROGRESS DOTS ââ */
-  #progress-dots {
-    position: absolute;
-    bottom: 64px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 8px;
-    pointer-events: auto;
-  }
-
-  .dot-btn {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.35);
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
-    border: none;
-  }
-  .dot-btn.active {
-    background: rgba(255,255,255,0.9);
-    transform: scale(1.4);
-  }
-
   /* ââ SETTINGS BUTTON ââ */
   #settings-btn {
     position: absolute;
-    bottom: 56px; right: 200px;
+    bottom: 88px; right: 200px;
     width: 40px; height: 40px;
     background: var(--glass);
     backdrop-filter: var(--blur);
@@ -583,70 +449,28 @@
   }
   #save-btn:hover { background: rgba(255,255,255,0.25); }
 
-  /* ââ LOADING ââ */
-  #loading {
-    position: fixed;
-    inset: 0; z-index: 50;
-    background: #000;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 16px;
-    transition: opacity 0.8s;
-  }
-  #loading.hidden { opacity: 0; pointer-events: none; }
-
-  .spinner {
-    width: 36px; height: 36px;
-    border: 2px solid rgba(255,255,255,0.1);
-    border-top-color: rgba(255,255,255,0.7);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  #loading p { color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; }
-</style>
+  </style>
 </head>
 <body>
 
-<!-- Loading screen -->
-<div id="loading">
-  <div class="spinner"></div>
-  <p>Preparing your photosâ¦</p>
-</div>
-
-<!-- Slideshow -->
-<div id="slideshow"></div>
 
 <!-- Overlay -->
 <div id="overlay">
-  <!-- Clock -->
-  <div id="clock-panel">
-    <div id="clock-time">12:00</div>
-    <div id="clock-date">Thursday, January 1</div>
   </div>
 
-  <!-- Weather (bottom right, above ticker) -->
-  <div id="weather-panel">
-    <span id="weather-icon">ð¤ï¸</span>
-    <div id="weather-temp">âÂ°</div>
-    <div id="weather-desc">Loadingâ¦</div>
-    <div id="weather-feels"></div>
-    <div id="weather-city">Vancouver, BC</div>
   </div>
 
   <!-- Week Strip (full-width top bar) -->
-  <div id="week-strip" style="display:none">
+  <div id="week-strip">
     <div id="week-days"></div>
   </div>
 
   <!-- Chores -->
   <div id="chores-panel"></div>
 
-  <!-- Progress dots -->
-  <div id="progress-dots"></div>
 
   <!-- Settings button -->
-  <button id="settings-btn" title="Settings">â</button>
+  <button id="settings-btn" title="Settings">&#9881;</button>
 
   <!-- Ticker -->
   <div id="ticker-wrap">
@@ -657,14 +481,13 @@
 <!-- Settings panel -->
 <div id="settings-panel">
   <div id="settings-box">
-    <h2>Settings <button id="settings-close">â</button></h2>
+    <h2>Settings <button id="settings-close">&times;</button></h2>
 
     <div class="setting-section">Display</div>
 
     <div class="setting-row">
       <div class="setting-label">Show Clock<small>Time and date overlay</small></div>
       <label class="toggle">
-        <input type="checkbox" id="tog-clock" checked>
         <span class="toggle-track"></span>
       </label>
     </div>
@@ -672,7 +495,6 @@
     <div class="setting-row">
       <div class="setting-label">Show Weather<small>Vancouver, BC</small></div>
       <label class="toggle">
-        <input type="checkbox" id="tog-weather" checked>
         <span class="toggle-track"></span>
       </label>
     </div>
@@ -738,23 +560,7 @@
 </div>
 
 <script>
-// ââ PHOTOS ââââââââââââââââââââââââââââââââââââââââââââââââââ
-const PHOTOS = [
-  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80', // Swiss Alps
-  'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=80', // Forest light
-  'https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=1600&q=80', // Iceland waterfall
-  'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1600&q=80', // Green mountains
-  'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1600&q=80', // Autumn forest
-  'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=1600&q=80', // Orange flowers
-  'https://images.unsplash.com/photo-1433477155337-9aea4e790195?w=1600&q=80', // Mountain lake
-  'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=80', // Lake mountains
-  'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=80', // Starry mountains
-  'https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?w=1600&q=80', // Coastal sunset
-  'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1600&q=80', // Tropical beach
-  'https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1600&q=80', // Green valley
-];
-
-// ââ DEFAULT TICKER MESSAGES âââââââââââââââââââââââââââââââââââ
+DEFAULT TICKER MESSAGES âââââââââââââââââââââââââââââââââââ
 const DEFAULT_MSGS = [
   "ð Homework before screens",
   "ð¹ Piano practice: 45 min",
@@ -768,16 +574,14 @@ const DEFAULT_MSGS = [
   "ð¥ Eat your greens",
 ];
 
-// ââ STATE ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ──  ────────────────────────────────────────────── STATE ââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let cfg = loadCfg();
-let currentIdx = 0;
 let slideInterval;
-let slides = [];
 let wakelock = null;
 let calEvents = []; // today's parsed calendar events for ticker
 let _choresDoneNotified = false;
 
-// ââ CONFIG ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ──  ────────────────────────────────────────────── CONFIG ââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function loadCfg() {
   try {
     const s = localStorage.getItem('pf-cfg');
@@ -811,103 +615,7 @@ async function sendNtfy(message) {
   } catch(e) {}
 }
 
-// ââ BUILD SLIDES ââââââââââââââââââââââââââââââââââââââââââââââ
-function buildSlides() {
-  const ss = document.getElementById('slideshow');
-  ss.innerHTML = '';
-  slides = [];
-  PHOTOS.forEach((url, i) => {
-    const div = document.createElement('div');
-    div.className = 'slide';
-    div.style.backgroundImage = `url(${url})`;
-    ss.appendChild(div);
-    slides.push(div);
-  });
-
-  // progress dots
-  const pd = document.getElementById('progress-dots');
-  pd.innerHTML = '';
-  PHOTOS.forEach((_, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'dot-btn' + (i === 0 ? ' active' : '');
-    btn.onclick = () => goTo(i);
-    pd.appendChild(btn);
-  });
-}
-
-function goTo(idx) {
-  slides[currentIdx].className = 'slide prev';
-  setTimeout(() => {
-    if (slides[currentIdx]) slides[currentIdx].className = 'slide';
-  }, 2000);
-  currentIdx = idx;
-  slides[currentIdx].className = 'slide active';
-  document.querySelectorAll('.dot-btn').forEach((b, i) => {
-    b.classList.toggle('active', i === currentIdx);
-  });
-}
-
-function nextSlide() {
-  goTo((currentIdx + 1) % slides.length);
-}
-
-function startSlideshow() {
-  clearInterval(slideInterval);
-  goTo(0);
-  slideInterval = setInterval(nextSlide, cfg.speed * 1000);
-}
-
-// ââ CLOCK ââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function tickClock() {
-  const now = new Date();
-  const h = String(now.getHours()).padStart(2,'0');
-  const m = String(now.getMinutes()).padStart(2,'0');
-  document.getElementById('clock-time').textContent = `${h}:${m}`;
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-  document.getElementById('clock-date').textContent =
-    `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
-}
-
-// ââ WEATHER (open-meteo, no key) âââââââââââââââââââââââââââââ
-const WMO = {
-  0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
-  45:'Fog',48:'Icy fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',
-  61:'Light rain',63:'Rain',65:'Heavy rain',71:'Light snow',73:'Snow',75:'Heavy snow',
-  77:'Snow grains',80:'Light showers',81:'Showers',82:'Heavy showers',
-  85:'Snow showers',86:'Heavy snow showers',
-  95:'Thunderstorm',96:'Thunderstorm + hail',99:'Thunderstorm + heavy hail',
-};
-
-const WMO_ICON = {
-  0:'âï¸',1:'ð¤ï¸',2:'â',3:'âï¸',
-  45:'ð«ï¸',48:'ð«ï¸',51:'ð¦ï¸',53:'ð¦ï¸',55:'ð§ï¸',
-  61:'ð§ï¸',63:'ð§ï¸',65:'ð§ï¸',71:'âï¸',73:'âï¸',75:'âï¸',
-  77:'ð¨ï¸',80:'ð¦ï¸',81:'ð§ï¸',82:'âï¸',
-  85:'ð¨ï¸',86:'ð¨ï¸',95:'âï¸',96:'âï¸',99:'âï¸',
-};
-
-async function fetchWeather() {
-  try {
-    const url = 'https://api.open-meteo.com/v1/forecast?latitude=49.25&longitude=-123.11' +
-      '&current=temperature_2m,apparent_temperature,weathercode' +
-      '&temperature_unit=celsius&timezone=America%2FVancouver';
-    const r = await fetch(url);
-    const d = await r.json();
-    const c = d.current;
-    const code = c.weathercode;
-    document.getElementById('weather-icon').textContent = WMO_ICON[code] || 'ð¤ï¸';
-    document.getElementById('weather-temp').textContent = `${Math.round(c.temperature_2m)}Â°`;
-    document.getElementById('weather-desc').textContent = WMO[code] || 'Unknown';
-    document.getElementById('weather-feels').textContent =
-      `Feels like ${Math.round(c.apparent_temperature)}Â°C`;
-  } catch(e) {
-    document.getElementById('weather-desc').textContent = 'Unavailable';
-  }
-}
-
-// ââ TICKER âââââââââââââââââââââââââââââââââââââââââââââââââââ
+TICKER âââââââââââââââââââââââââââââââââââââââââââââââââââ
 function buildTicker() {
   const customMsgs = cfg.messages.split('\n').map(m=>m.trim()).filter(Boolean);
 
@@ -934,18 +642,14 @@ function buildTicker() {
   ).join('');
 }
 
-// ââ VISIBILITY âââââââââââââââââââââââââââââââââââââââââââââââ
+// ──  ────────────────────────────────────────────── VISIBILITY âââââââââââââââââââââââââââââââââââââââââââââââ
 function applyVisibility() {
-  document.getElementById('clock-panel').style.display   = cfg.showClock    ? '' : 'none';
-  document.getElementById('weather-panel').style.display = cfg.showWeather  ? '' : 'none';
   document.getElementById('ticker-wrap').style.display   = cfg.showTicker   ? '' : 'none';
   if (!cfg.showCalendar) document.getElementById('week-strip').style.display = 'none';
 }
 
-// ââ SETTINGS UI âââââââââââââââââââââââââââââââââââââââââââââââ
+// ──  ────────────────────────────────────────────── SETTINGS UI âââââââââââââââââââââââââââââââââââââââââââââââ
 function openSettings() {
-  document.getElementById('tog-clock').checked   = cfg.showClock;
-  document.getElementById('tog-weather').checked = cfg.showWeather;
   document.getElementById('tog-ticker').checked  = cfg.showTicker;
   document.getElementById('slide-speed').value   = cfg.speed;
   document.getElementById('speed-val').textContent = `${cfg.speed} seconds`;
@@ -978,8 +682,6 @@ document.getElementById('slide-speed').oninput = function() {
 };
 
 document.getElementById('save-btn').onclick = () => {
-  cfg.showClock    = document.getElementById('tog-clock').checked;
-  cfg.showWeather  = document.getElementById('tog-weather').checked;
   cfg.showTicker   = document.getElementById('tog-ticker').checked;
   cfg.showCalendar = document.getElementById('tog-calendar').checked;
   cfg.calUrl       = document.getElementById('cal-url').value.trim();
@@ -1001,11 +703,10 @@ document.getElementById('save-btn').onclick = () => {
   applyVisibility();
   buildTicker();
   buildChores();
-  startSlideshow();
   closeSettings();
 };
 
-// ââ WAKE LOCK ââââââââââââââââââââââââââââââââââââââââââââââââ
+// ──  ────────────────────────────────────────────── WAKE LOCK ââââââââââââââââââââââââââââââââââââââââââââââââ
 async function requestWakeLock() {
   try {
     if ('wakeLock' in navigator) {
@@ -1018,7 +719,7 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') requestWakeLock();
 });
 
-// ââ CALENDAR / WEEK STRIP ââââââââââââââââââââââââââââââââââââ
+// ──  ────────────────────────────────────────────── CALENDAR / WEEK STRIP ââââââââââââââââââââââââââââââââââââ
 async function fetchCalendar() {
   const url = cfg.calUrl;
   const strip = document.getElementById('week-strip');
@@ -1146,7 +847,7 @@ function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-// ââ CHORES âââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ──  ────────────────────────────────────────────── CHORES âââââââââââââââââââââââââââââââââââââââââââââââââââ
 const CHORES_DEFAULT = [
   { id: 'S', label: 'S', tasks: ['Vacuum', 'Exercise'] },
   { id: 'N', label: 'N', tasks: ['Vacuum', 'Homework', 'Sprinting'] },
@@ -1233,7 +934,7 @@ function buildChores() {
   });
 }
 
-// ââ NOTIFICATIONS âââââââââââââââââââââââââââââââââââââââââââââ
+// ──  ────────────────────────────────────────────── NOTIFICATIONS âââââââââââââââââââââââââââââââââââââââââââââ
 async function requestNotificationPermission() {
   if (!('Notification' in window)) return;
   if (Notification.permission === 'default') {
@@ -1296,41 +997,16 @@ function startEveningReminder() {
   }, 30 * 1000); // check every 30 seconds
 }
 
-// ââ INIT âââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ──  ────────────────────────────────────────────── INIT âââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function init() {
-  buildSlides();
   applyVisibility();
   buildTicker();
   buildChores();
   fetchCalendar();
   checkDailyReset();
   setInterval(checkDailyReset, 60 * 1000);
-  tickClock();
-
-  // preload first 3 images
-  let loaded = 0;
-  const preload = Math.min(3, PHOTOS.length);
-  const preloadDone = () => {
-    loaded++;
-    if (loaded >= preload) {
-      startSlideshow();
-      const l = document.getElementById('loading');
-      l.classList.add('hidden');
-      setTimeout(() => l.style.display = 'none', 1000);
-    }
-  };
-  for (let i = 0; i < preload; i++) {
-    const img = new Image();
-    img.onload = img.onerror = preloadDone;
-    img.src = PHOTOS[i];
-  }
 
   // clock tick every second
-  setInterval(tickClock, 1000);
-
-  // weather fetch + refresh every 10 min
-  fetchWeather();
-  setInterval(fetchWeather, 10 * 60 * 1000);
 
   // calendar refresh every 15 min
   setInterval(fetchCalendar, 15 * 60 * 1000);
