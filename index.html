@@ -867,10 +867,12 @@ function buildChores() {
       item.innerHTML = '<div class="chore-cb"></div><div class="chore-label">' + task + '</div>';
       item.onclick = () => {
         const s = loadChores();
+        const wasUndone = !s[key];
         if (s[key]) delete s[key];
         else s[key] = true;
         saveChores(s);
         item.classList.toggle('done');
+        if (wasUndone) sendNtfy('✅ ' + task + ' — done!');
         checkChoreCompletion();
       };
       colEl.appendChild(item);
